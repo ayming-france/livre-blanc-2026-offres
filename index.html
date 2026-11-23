@@ -10,10 +10,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
 <link rel="stylesheet" href="style.css">
 <style>
-#map col.c-n{width:56px} #map col.c-prop{width:17%} #map col.c-st{width:140px} #map col.c-pis{width:25%} #map col.c-why{width:auto} #map col.c-off{width:15%} #map col.c-pr{width:112px}
+#map col.c-n{width:92px} #map col.c-prop{width:17%} #map col.c-st{width:140px} #map col.c-pis{width:25%} #map col.c-why{width:auto} #map col.c-off{width:15%} #map col.c-pr{width:112px}
 #map td.off{color:var(--muted)}
 .more{display:block;margin-top:6px;font-size:13px;font-weight:700;color:var(--mid);text-decoration:none}
 .more:hover{text-decoration:underline}
+#map td.n .pair{display:block;white-space:nowrap}
+#map td.n .pair+.pair{margin-top:6px}
+#map td.n .yr{font-size:11px;font-weight:400;color:var(--faint);letter-spacing:0;margin-left:4px}
+#map td.n .pair.old{font-size:13px;color:var(--muted)}
+#map td.prop .axe{display:block;margin-top:4px;font-size:12px;font-weight:400;color:var(--faint)}
+#map td.prop .hist{margin-top:6px;font-size:13px;font-weight:400}
+#map td.prop .hist summary{cursor:pointer;color:var(--mid);font-weight:700}
+#map td.prop .hist p{margin:6px 0 0;color:var(--muted);line-height:1.45}
 
 </style>
 </head>
@@ -22,9 +30,9 @@
 
 <header>
   <h1>Livre blanc 2026 et offres RH</h1>
-  <p class="lead">Pour chaque proposition du livre blanc, la piste à lancer, pourquoi maintenant, et ce que nous vendons déjà. Sur 16 propositions, 2 sont couvertes, 6 demandent un add-on à une offre existante, 4 une nouvelle offre, 1 un savoir-faire à formaliser, et 3 sont des demandes à l'État¹.</p>
+  <p class="lead">Pour chaque proposition du livre blanc, la piste à lancer, pourquoi maintenant, et ce que nous vendons déjà. Sur 16 propositions, 2 sont couvertes, 6 demandent un add-on à une offre existante, 4 une nouvelle offre, 1 un savoir-faire à formaliser, et 3 sont des demandes à l'État¹. Le livre blanc 2025 est rangé dans les mêmes lignes : 11 de ses 15 propositions reviennent en 2026, dont 3 sous une autre forme, et chaque ligne dit ce qui a changé. Les 4 absentes en 2026 (P4, P6, P7, P11) ont leur propre ligne.</p>
   <nav class="tabs" aria-label="Pages">
-    <a href="./" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Propositions et offres <span class="c">16</span></a>
+    <a href="./" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Propositions et offres <span class="c">20</span></a>
     <a href="pistes.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Pistes à lancer <span class="c">3</span></a>
     <a href="corrections.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Corrections avant publication <span class="c">10</span></a>
   </nav>
@@ -35,6 +43,7 @@
   <div class="view" id="mapview">
     <div class="toolbar" role="toolbar" aria-label="Filtres">
       <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Rechercher" aria-label="Rechercher une proposition ou une offre"></label>
+      <span class="fbtn" id="fb-year"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 8h6M9 12h6"/></svg><span class="lbl">Livre blanc</span><select id="f-year" aria-label="Filtrer par livre blanc"></select></span>
       <span class="fbtn" id="fb-status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg><span class="lbl">Statut</span><select id="f-status" aria-label="Filtrer par statut"></select></span>
       <span class="fbtn" id="fb-axe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="lbl">Axe</span><select id="f-axe" aria-label="Filtrer par axe"></select></span>
       <span class="fbtn" id="fb-group"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/></svg><span class="lbl">Grouper par axe</span><select id="f-group" aria-label="Grouper les lignes"><option value="axe">Grouper par axe</option><option value="status">Grouper par statut</option><option value="none">Sans regroupement</option></select></span>
@@ -58,12 +67,14 @@
   </div>
 </section>
 
-<p class="foot">¹ Add-on : un service ajouté à une offre que le client connaît déjà. Nouvelle offre : rien de ce que nous vendons ne répond à la proposition, ou seulement une petite partie. À formaliser : nous le faisons déjà sans le vendre sous un nom. Demande à l'État : la proposition demande un changement de loi, il n'y a rien à vendre.<br>Priorité. Maintenant : une règle de 2026 change déjà le coût pour le client, et aucun concurrent n'a d'offre en face. Ensuite : la demande existe, mais rien ne presse ou nous savons déjà le faire. À vérifier : une première recherche, à confirmer avant tout support client.<br>² Sources : texte du livre blanc lu en entier, fiches des offres RH France, recherche web du 23 novembre 2026.</p>
+<p class="foot">¹ Add-on : un service ajouté à une offre que le client connaît déjà. Nouvelle offre : rien de ce que nous vendons ne répond à la proposition, ou seulement une petite partie. À formaliser : nous le faisons déjà sans le vendre sous un nom. Demande à l'État : la proposition demande un changement de loi, il n'y a rien à vendre.<br>Priorité. Maintenant : une règle de 2026 change déjà le coût pour le client, et aucun concurrent n'a d'offre en face. Ensuite : la demande existe, mais rien ne presse ou nous savons déjà le faire. À vérifier : une première recherche, à confirmer avant tout support client.<br>² Sources : textes des livres blancs 2025 et 2026 lus en entier, courriers de la CPAM reçus par un client en janvier 2026, fiches des offres RH France, recherche web du 23 novembre 2026.</p>
 </div>
 
 <script>
 (function(){
-  var AXES={1:"Axe 1 · Coût du travail",2:"Axe 2 · Sécurité juridique",3:"Axe 3 · Accidents du travail",4:"Axe 4 · Arrêts de travail"};
+  var AX={2026:{1:"Axe 1 · Coût du travail",2:"Axe 2 · Sécurité juridique",3:"Axe 3 · Accidents du travail",4:"Axe 4 · Arrêts de travail"},
+          2025:{1:"Axe 1 · Coût du travail",2:"Axe 2 · Lutte contre la fraude",3:"Axe 3 · Fonctionnement des caisses",4:"Axe 4 · Financement des AT/MP"}};
+  function axeOf(r){return AX[r.yr][r.axe];}
   var ST={ok:"Couvert",addon:"Add-on",new:"Nouvelle offre",prac:"À formaliser",pol:"Demande à l'État"};
   var PRIO={1:"Maintenant",2:"Ensuite",3:"À vérifier"};
   var ST_KEYS=["ok","addon","new","prac","pol"];
@@ -82,73 +93,115 @@
     {n:11,axe:3,prop:"Améliorer l'instruction des malaises",offers:["Déclarer un accident du travail (réserves motivées)","ABO DAT"],st:"addon",on:"Sur Déclarer un accident du travail",piste:"Instruire un malaise dès la déclaration : faits, réserves sur un état antérieur, lecture médicale.",why:"59 % des accidents du travail mortels de 2024 sont liés à un malaise. La jurisprudence 2025-2026 rend la preuve contraire difficile.",prio:2},
     {n:12,axe:4,prop:"Lutter contre les arrêts injustifiés ou trop longs",offers:["Piloter les arrêts longue durée (AT seulement)","IJ et activité non autorisée","Collecter et traiter les arrêts"],st:"new",on:"Offre absentéisme maladie",more:"absenteisme",piste:"Diagnostic des arrêts sur les données DSN et IJ, pour cibler les contre-visites et les retours au travail.",why:"Depuis le 1er septembre 2026, un premier arrêt est plafonné à 31 jours et chaque prolongation à 62 jours. La loi contre les fraudes de 2026 permet à l'employeur d'arrêter le maintien de salaire après une contre-visite négative.",prio:1},
     {n:13,axe:4,prop:"Faciliter les reprises anticipées et la coordination des acteurs",offers:[],st:"new",on:"Offre absentéisme maladie",more:"absenteisme",piste:"Plan de retour à 30, 90 et 120 jours : visite de pré-reprise, rendez-vous de liaison, temps partiel thérapeutique.",why:"Même calendrier que P12.",prio:1},
-    {n:14,axe:4,prop:"Renforcer les contrôles",offers:["Piloter les arrêts longue durée (signalement à la CPAM, AT seulement)"],st:"new",on:"Offre absentéisme maladie",more:"absenteisme",piste:"Contre-visite sur les arrêts maladie, organisée avec des médecins partenaires.",why:"Même calendrier que P12.",prio:1},
-    {n:15,axe:4,prop:"Assurer l'efficacité du dispositif « SOS Fraudes »",offers:["IJ et activité non autorisée","Signalement structuré dans Piloter les arrêts longue durée"],st:"ok"},
+    {n:14,axe:4,prop:"Renforcer les contrôles",offers:["Piloter les arrêts longue durée (signalement à la CPAM, AT seulement)","Contrôle de la cohérence, option de Collecter et traiter les arrêts (Ayming\u00a0Collect)"],st:"new",on:"Offre absentéisme maladie",more:"absenteisme",piste:"Contre-visite sur les arrêts maladie, organisée avec des médecins partenaires.",why:"Même calendrier que P12.",prio:1},
+    {n:15,axe:4,prop:"Assurer l'efficacité du dispositif « SOS Fraudes »",offers:["IJ et activité non autorisée","Signalement structuré dans Piloter les arrêts longue durée","Contrôle de la cohérence, option de Collecter et traiter les arrêts (Ayming\u00a0Collect)"],st:"ok"},
     {n:16,axe:4,prop:"Choc émotionnel au travail et pouvoir de direction",offers:["Déclarer un accident du travail","Traiter un questionnaire de maladie professionnelle","Évaluer les risques professionnels (DUERP)"],st:"addon",on:"Sur Déclarer un accident du travail",piste:"Même add-on que P11, étendu aux chocs émotionnels après un échange managérial.",why:"Les AT psychosociaux sont en hausse. Un entretien devenu disciplinaire peut être reconnu comme AT (Cass. 2025).",prio:2}
   ];
+  rows.forEach(function(r){r.yr=2026;});
+  // 2025 propositions carried into a 2026 row: [2025 number, what changed, constat only]
+  var LB={
+    1:[[1,"Même mesure, au mot près."]],
+    2:[[2,"2025 demandait aussi de ramener les barèmes d'exonération à deux (général et renforcé) et de lisser les effets de seuil. Les heures supplémentaires sont nouvelles en 2026."]],
+    3:[[5,"Même demande. En 2025, la déduction forfaitaire unique s'appliquait à tous les salariés ; en 2026, seulement à ceux qui exposent des frais."]],
+    4:[[3,"2025 P3 demandait de limiter les ajustements successifs, une étude d'impact avant toute évolution et des mesures transitoires. 2026 en fait un délai d'application à l'exercice suivant et ne demande plus l'étude d'impact."]],
+    5:[[3,"Reprend la suggestion 5 de 2025 P3 : pas de redressement fondé sur un changement rétroactif de doctrine. L'élargissement du rescrit est nouveau."]],
+    6:[[3,"Reprend la suggestion 4 de 2025 P3 : un principe de non-rétroactivité des revirements de jurisprudence."]],
+    7:[[3,"Prolonge la suggestion 4 de 2025 P3 côté doctrine, en l'alignant sur la garantie fiscale (article L. 80 A du LPF)."]],
+    8:[[10,"Même demande : la décision est inopposable si le dossier médical n'est pas transmis au médecin mandaté. 2026 ajoute la transmission du rapport d'IP et une mesure d'instruction contradictoire."],[15,"Même terrain, autre demande. En 2025 : l'expertise demandée par l'employeur serait à sa charge, sauf décision du juge, pour que les juges cessent de la refuser par souci de coût. 2026 ne reprend pas ce point et demande une mesure d'instruction obligatoire."]],
+    9:[[12,"Même demande : associer l'entreprise utilisatrice à l'instruction, lui ouvrir les réserves et un recours, partager la prévention."]],
+    10:[[13,"2026 garde l'exclusion du taux (le compte spécial en 2025) et l'harmonisation des notions d'arme et d'agression. N'y sont plus : l'attestation d'assurance comme preuve de la part du tiers, un guide commun aux CARSAT et à la CRAMIF, des preuves autres que la plainte du salarié, l'accès de l'employeur à la procédure pénale (article L. 455-2)."]],
+    11:[[14,"Même sujet, demande adoucie. En 2025, la prise en charge d'un malaise dépendait de l'impossibilité d'identifier une cause médicale. En 2026, l'instruction médicale devient obligatoire sans toucher à la présomption ni à la charge de la preuve."]],
+    12:[[9,"Même objectif. En 2025 : ouvrir au médecin prescripteur le dossier médical du salarié (et la déclaration d'AT), et subordonner une prolongation à un contact avec le médecin du travail. 2026 ne garde que le dialogue entre médecins (mesure 7)."]],
+    15:[[8,"En 2025 : un circuit de signalement des absences abusives, de l'entreprise vers la caisse. Ce circuit existe désormais (SOS Fraudes), et 2026 demande qu'un signalement soit suivi d'un contrôle."]],
+    16:[[9,"2025 P9 décrivait déjà des arrêts déclarés après une mesure disciplinaire, au motif d'un choc, sans en faire une proposition.",1]]
+  };
+  rows.forEach(function(r){r.lb=LB[r.n]||[];});
+  rows[14].why="La LFSS 2025 (article 26 III) a ouvert l'autre sens que demandait 2025 P8, de la caisse vers l'employeur : un client du transport a reçu trois courriers de ce type en janvier 2026.";
+  // 2025 propositions absent from the 2026 white paper
+  var rows25=[
+    {n:4,axe:1,prop:"Faire converger les régimes sociaux du public et du privé",offers:["Optimisation des charges sociales, dont le secteur public est un segment"],st:"pol",gone:"Elle demandait d'ouvrir aux contractuels du public les exonérations et aides du privé, apprentissage compris, et de compenser aux collectivités le coût de la protection sociale complémentaire."},
+    {n:6,axe:1,prop:"Lutter contre l'absentéisme, public et privé, par une responsabilisation partagée",offers:["Collecter et traiter les arrêts","Piloter les arrêts longue durée (AT seulement)","Récupérer les IJ non perçues, qui cible déjà les collectivités"],st:"new",on:"Offre absentéisme maladie",more:"absenteisme",piste:"La même offre que 2026 P12 à P14, déclinée pour les collectivités : indicateurs par agent et par service, entretiens de retour, contre-visites quand les absences se répètent.",gone:"Elle demandait trois jours de carence dans la fonction publique, une part de rémunération liée à la présence, et des actions de prévention et de contrôle. 2026 ne reprend que le contrôle par télémédecine (P12, mesure 2)."},
+    {n:7,axe:2,prop:"Croiser les données entre administrations (CPAM, Urssaf, DGFiP) pour repérer la fraude",offers:["IJ et activité non autorisée, qui prend le relais quand la caisse a détecté une activité"],st:"pol",gone:"Son exemple, un salarié en arrêt qui travaille en parallèle comme indépendant, est le cas que traite IJ et activité non autorisée."},
+    {n:11,axe:3,prop:"Aligner le fonctionnement des MSA sur l'Urssaf et les CARSAT",offers:[],st:"pol",gone:"Elle visait le recouvrement de la MSA et les cotisations trop versées qu'elle tarde à rembourser. Aucune de nos offres ne traite les cotisations MSA."}
+  ];
+  rows25.forEach(function(r){r.yr=2025;r.lb=[];});
+  rows=rows.concat(rows25);
+  rows.forEach(function(r){
+    r.id=(r.yr%100)+'-'+r.n;
+    r.in26=r.yr===2026;
+    r.in25=r.yr===2025||r.lb.some(function(l){return !l[2];});
+  });
+  var YEARS=[["both","Dans les deux",function(r){return r.in26&&r.in25;}],["2026","Livre blanc 2026",function(r){return r.in26;}],["2025","Livre blanc 2025",function(r){return r.in25;}],["gone","Absentes en 2026",function(r){return !r.in26;}]];
+  function yearOk(r){var y=YEARS.filter(function(x){return x[0]===fy.value;})[0];return !y||y[2](r);}
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   function status(st){return '<span class="status"><span class="dot d-'+st+'"></span>'+ST[st]+'</span>';}
   function fold(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
   function count(arr,f){return arr.filter(f).length;}
-  var total=rows.length;
+  
 
-  var fs=document.getElementById('f-status'),fa=document.getElementById('f-axe'),fg=document.getElementById('f-group'),q=document.getElementById('q');
+  var fy=document.getElementById('f-year'),fs=document.getElementById('f-status'),fa=document.getElementById('f-axe'),fg=document.getElementById('f-group'),q=document.getElementById('q');
   fs.innerHTML='<option value="">Tous les statuts</option>'+ST_KEYS.map(function(k){return '<option value="'+k+'">'+ST[k]+' ('+count(rows,function(r){return r.st===k;})+')</option>';}).join('');
-  fa.innerHTML='<option value="">Tous les axes</option>'+Object.keys(AXES).map(function(k){return '<option value="'+k+'">'+AXES[k]+'</option>';}).join('');
+  fy.innerHTML='<option value="">Les deux livres blancs</option>'+YEARS.map(function(y){return '<option value="'+y[0]+'">'+y[1]+(y[0]==='2025'?', 15 propositions':' ('+count(rows,y[2])+')')+'</option>';}).join('');
+  fa.innerHTML='<option value="">Tous les axes</option>'+[2026,2025].map(function(y){return '<optgroup label="'+(y===2025?'Absentes en 2026 (axes de 2025)':'Livre blanc 2026')+'">'+Object.keys(AX[y]).filter(function(k){return rows.some(function(r){return r.yr===y&&String(r.axe)===k;});}).map(function(k){return '<option value="'+y+'-'+k+'">'+AX[y][k]+'</option>';}).join('')+'</optgroup>';}).join('');
 
   var sort={key:'n',dir:1}, only=null;
   function label(id,sel,base,isDefault){var b=document.getElementById(id);var v=sel.value;var on=!!v&&!isDefault;b.classList.toggle('on',on);b.querySelector('.lbl').textContent=on||id==='fb-group'?sel.options[sel.selectedIndex].text.replace(/ \(\d+\)$/,''):base;}
-
   function render(){
     var words=fold(q.value).split(/\s+/).filter(Boolean), term=words.join(' ');
     var list=rows.filter(function(r){
-      if(only&&only.indexOf(r.n)<0)return false;
+      if(only&&only.indexOf(r.id)<0)return false;
+      if(!yearOk(r))return false;
       if(fs.value&&r.st!==fs.value)return false;
-      if(fa.value&&String(r.axe)!==fa.value)return false;
-      if(words.length){var hay=fold([r.prop,r.offers.join(' '),r.on||'',r.piste||'',r.why||'',ST[r.st],r.prio?PRIO[r.prio]:'','p'+r.n].join(' '));if(!words.every(function(w){return hay.indexOf(w)>=0;}))return false;}
+      if(fa.value&&r.yr+'-'+r.axe!==fa.value)return false;
+      if(words.length){var hay=fold([r.prop,axeOf(r),'livre blanc '+r.yr,r.offers.join(' '),r.on||'',r.piste||'',r.why||'',r.gone||'',ST[r.st],r.prio?PRIO[r.prio]:'','p'+r.n,r.lb.map(function(l){return '2025 p'+l[0]+' '+l[1];}).join(' ')].join(' '));if(!words.every(function(w){return hay.indexOf(w)>=0;}))return false;}
       return true;
     });
     list.sort(function(a,b){
       var va,vb;
       if(sort.key==='status'){va=ST_ORDER[a.st];vb=ST_ORDER[b.st];}
       else if(sort.key==='prio'){va=a.prio||99;vb=b.prio||99;}
-      else{va=a.n;vb=b.n;}
-      return (va-vb)*sort.dir||a.n-b.n;
+      else{va=(2100-a.yr)*100+a.n;vb=(2100-b.yr)*100+b.n;}
+      return (va-vb)*sort.dir||b.yr-a.yr||a.n-b.n;
     });
     var groupBy=fg.value,html='',last=null;
     list.forEach(function(r){
-      var g=groupBy==='axe'?r.axe:groupBy==='status'?r.st:null;
+      var g=groupBy==='axe'?r.yr+'-'+r.axe:groupBy==='status'?r.st:null;
       if(g!==null&&g!==last){
-        var n=list.filter(function(x){return (groupBy==='axe'?x.axe:x.st)===g;}).length;
-        html+='<tr class="group"><td colspan="7">'+(groupBy==='axe'?AXES[g]:ST[g])+'<span>'+n+' proposition'+(n>1?'s':'')+'</span></td></tr>';
+        var n=list.filter(function(x){return (groupBy==='axe'?x.yr+'-'+x.axe:x.st)===g;}).length;
+        html+='<tr class="group"><td colspan="7">'+(groupBy==='axe'?(r.yr===2025?'Absentes en 2026 · '+axeOf(r)+' du livre blanc 2025':'2026 · '+axeOf(r)):ST[g])+'<span>'+n+' proposition'+(n>1?'s':'')+'</span></td></tr>';
         last=g;
       }
       var offers=r.offers.length?(r.offers.length>1?'<ul class="offers">'+r.offers.map(function(o){return '<li>'+esc(o)+'</li>';}).join('')+'</ul>':esc(r.offers[0])):'<span class="dim">Aucune</span>';
       var piste=r.piste?'<span class="kind">'+esc(r.on)+'</span>'+esc(r.piste)+(r.more?'<a class="more" href="pistes.html#'+r.more+'">Voir le détail →</a>':''):'<span class="dim">'+(r.st==='ok'?"L'offre existe":"Pas d'offre à créer")+'</span>';
       var pr=r.prio?'<span class="prio'+(r.prio===1?' hi':'')+'">'+PRIO[r.prio]+'</span>':'<span class="dim">·</span>';
-      html+='<tr><td class="n">P'+r.n+'</td><td class="prop">'+esc(r.prop)+'</td><td data-l="Statut">'+status(r.st)+'</td><td data-l="Piste proposée">'+piste+'</td><td data-l="Pourquoi maintenant"'+(r.why?'':' class="nil"')+'>'+(r.why?esc(r.why):'<span class="dim">·</span>')+'</td><td class="off" data-l="Ce que nous vendons déjà">'+offers+'</td><td data-l="Priorité"'+(r.prio?'':' class="nil"')+'>'+pr+'</td></tr>';
+      var props=r.lb.filter(function(l){return !l[2];}), cons=r.lb.filter(function(l){return l[2];});
+      var num=r.yr===2025?'<span class="pair old">P'+r.n+'<span class="yr">2025</span></span>':'<span class="pair">P'+r.n+'<span class="yr">2026</span></span>'+(props.length?'<span class="pair old">'+props.map(function(l){return 'P'+l[0];}).join(' ')+'<span class="yr">2025</span></span>':'');
+      var hist='';
+      if(r.lb.length)hist='<details class="hist"><summary>'+(props.length?'Ce qui a changé depuis 2025':'Constat de 2025 P'+cons[0][0])+'</summary>'+r.lb.map(function(l){return '<p><b>2025 P'+l[0]+'</b> '+esc(l[1])+'</p>';}).join('')+'</details>';
+      else if(r.gone)hist='<details class="hist"><summary>Absente en 2026</summary><p>'+esc(r.gone)+'</p></details>';
+      html+='<tr><td class="n">'+num+'</td><td class="prop">'+esc(r.prop)+(groupBy==='axe'?'':'<span class="axe">'+esc(axeOf(r))+'</span>')+hist+'</td><td data-l="Statut">'+status(r.st)+'</td><td data-l="Piste proposée">'+piste+'</td><td data-l="Pourquoi maintenant"'+(r.why?'':' class="nil"')+'>'+(r.why?esc(r.why):'<span class="dim">·</span>')+'</td><td class="off" data-l="Ce que nous vendons déjà">'+offers+'</td><td data-l="Priorité"'+(r.prio?'':' class="nil"')+'>'+pr+'</td></tr>';
     });
     if(!list.length)html='<tr class="empty"><td colspan="7">Aucune proposition ne correspond à ces filtres.</td></tr>';
     document.querySelector('#map tbody').innerHTML=html;
-    document.getElementById('count').textContent=list.length+' sur '+total;
-    var active=only||fs.value||fa.value||term||fg.value!=='axe'||sort.key!=='n'||sort.dir!==1;
+    document.getElementById('count').textContent=list.length+' sur '+rows.length;
+    var active=only||fy.value||fs.value||fa.value||term||fg.value!=='axe'||sort.key!=='n'||sort.dir!==1;
     document.getElementById('clear').classList.toggle('show',!!active);
-    label('fb-status',fs,'Statut');label('fb-axe',fa,'Axe');label('fb-group',fg,'Grouper par axe',fg.value==='axe');
+    label('fb-year',fy,'Livre blanc');label('fb-status',fs,'Statut');label('fb-axe',fa,'Axe');label('fb-group',fg,'Grouper par axe',fg.value==='axe');
     document.querySelectorAll('#map th[data-key]').forEach(function(th){
       var on=th.dataset.key===sort.key;
       if(on){th.setAttribute('aria-sort',sort.dir>0?'ascending':'descending');th.querySelector('.arrow').textContent=sort.dir>0?'▲':'▼';}
       else{th.removeAttribute('aria-sort');th.querySelector('.arrow').textContent='▲';}
     });
   }
-  [fs,fa,fg].forEach(function(s){s.addEventListener('change',function(){only=null;render();});});
+  [fy,fs,fa,fg].forEach(function(s){s.addEventListener('change',function(){only=null;render();});});
   q.addEventListener('input',function(){only=null;render();});
-  document.getElementById('clear').addEventListener('click',function(){only=null;if(location.search)history.replaceState(null,'',location.pathname);fs.value='';fa.value='';fg.value='axe';q.value='';sort={key:'n',dir:1};render();});
+  document.getElementById('clear').addEventListener('click',function(){only=null;if(location.search)history.replaceState(null,'',location.pathname);fy.value='';fs.value='';fa.value='';fg.value='axe';q.value='';sort={key:'n',dir:1};render();});
   document.querySelectorAll('#map th[data-key] button').forEach(function(b){
     b.addEventListener('click',function(){var k=b.parentNode.dataset.key;if(sort.key===k)sort.dir*=-1;else sort={key:k,dir:1};if(k!=='n'&&fg.value==='axe')fg.value='none';render();});
   });
   var p=new URLSearchParams(location.search).get('p');
-  if(p)only=p.split(',').map(Number);
+  if(p)only=p.split(',').map(function(x){return x.indexOf('-')>0?x:'26-'+x;});
   render();
 })();
 </script>
