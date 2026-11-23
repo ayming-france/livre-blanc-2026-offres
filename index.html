@@ -130,19 +130,8 @@ a{color:var(--mid)}
 <div class="wrap">
 
 <header>
-  <span class="eyebrow">Livre blanc Ayming 2026 · Offres RH France</span>
-  <h1>Quelles offres en face des 16 propositions ?</h1>
-  <p class="lead">Chaque proposition du livre blanc « 16 propositions pour un système de protection sociale plus juste et plus efficace » est rapprochée de nos offres. Quand une offre manque, une piste est proposée.</p>
-  <div class="figure">
-    <div class="big"><b id="covered">11<small> sur 16</small></b><span>propositions trouvent déjà une offre Ayming, au moins en partie</span></div>
-    <div class="bar" id="bar" aria-hidden="true"></div>
-    <div class="keys" id="keys"></div>
-    <div class="stats">
-      <div class="stat"><b>8</b><span>pistes d'offre proposées</span></div>
-      <div class="stat"><b>3</b><span>à lancer en premier</span></div>
-      <div class="stat"><b id="nfix">10</b><span>corrections avant publication</span></div>
-    </div>
-  </div>
+  <h1>Livre blanc 2026 : quelles offres en face des 16 propositions ?</h1>
+  <p class="lead">11 propositions sur 16 trouvent déjà une offre Ayming, au moins en partie. Pour les autres, une piste est proposée.</p>
 </header>
 
 <section aria-labelledby="t1">
@@ -255,11 +244,7 @@ a{color:var(--mid)}
   function status(st){return '<span class="status"><span class="dot d-'+st+'"></span>'+ST[st]+'</span>';}
   function count(arr,f){return arr.filter(f).length;}
 
-  // Header bar and keys
   var total=rows.length;
-  document.getElementById('bar').innerHTML=ST_KEYS.map(function(k){var c=count(rows,function(r){return r.st===k;});return c?'<i class="d-'+k+'" style="flex:'+c+'"></i>':'';}).join('');
-  document.getElementById('keys').innerHTML=ST_KEYS.map(function(k){return '<span><span class="dot d-'+k+'"></span>'+ST[k]+' <b>'+count(rows,function(r){return r.st===k;})+'</b></span>';}).join('');
-  document.getElementById('nfix').textContent=fixes.length;
 
   var fs=document.getElementById('f-status'),fa=document.getElementById('f-axe'),fk=document.getElementById('f-kind'),fg=document.getElementById('f-group'),q=document.getElementById('q');
   fs.innerHTML='<option value="">Tous les statuts</option>'+ST_KEYS.map(function(k){return '<option value="'+k+'">'+ST[k]+' ('+count(rows,function(r){return r.st===k;})+')</option>';}).join('');
