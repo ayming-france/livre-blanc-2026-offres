@@ -10,10 +10,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
 <link rel="stylesheet" href="style.css">
 <style>
-#fix col.c-p{width:56px} #fix col.c-w{width:120px} #fix col.c-cur{width:22%} #fix col.c-fix{width:auto} #fix col.c-t{width:112px} #fix col.c-img{width:270px} #fix col.c-src{width:130px}
+#fix col.c-p{width:56px} #fix col.c-w{width:120px} #fix col.c-cur{width:26%} #fix col.c-fix{width:auto} #fix col.c-t{width:112px} #fix col.c-img{width:270px} #fix col.c-src{width:130px}
 .shot{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;cursor:zoom-in;transition:border-color .15s ease-out}
 .shot:hover{border-color:var(--accent)}
 .shot img{display:block;width:100%;height:auto}
+.issue{display:block;color:var(--strong);font-weight:700;margin-bottom:4px}
+.cur{display:block;color:var(--muted);font-size:13px}
+.hit{color:var(--strong);text-decoration:underline;text-decoration-color:var(--none);text-decoration-thickness:2px;text-underline-offset:3px}
 .links{display:grid;gap:4px;justify-items:start}
 .links a,.links button{font:inherit;font-size:13px;font-weight:700;color:var(--mid);background:none;border:none;padding:0;cursor:pointer;text-decoration:none}
 .links a:hover,.links button:hover{text-decoration:underline}
@@ -60,7 +63,7 @@ dialog.viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;anim
     </div>
     <table id="fix">
       <colgroup><col class="c-p"><col class="c-w"><col class="c-cur"><col class="c-fix"><col class="c-t"><col class="c-img"><col class="c-src"></colgroup>
-      <thead><tr><th><span>Page</span></th><th><span>Où</span></th><th><span>Texte actuel</span></th><th><span>Correction proposée</span></th><th><span>Type</span></th><th><span>Capture</span></th><th><span>Lien</span></th></tr></thead>
+      <thead><tr><th><span>Page</span></th><th><span>Où</span></th><th><span>Problème</span></th><th><span>Correction proposée</span></th><th><span>Type</span></th><th><span>Capture</span></th><th><span>Lien</span></th></tr></thead>
       <tbody></tbody>
     </table>
   </div>
@@ -76,7 +79,7 @@ dialog.viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;anim
     <button class="ibtn" id="v-close" aria-label="Fermer" autofocus><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
   </div>
   <div class="v-img"><img id="v-img" alt=""></div>
-  <div class="v-foot"><span><b>Correction proposée.</b> <span id="v-fix"></span></span></div>
+  <div class="v-foot"><span><b>Problème.</b> <span id="v-issue"></span></span><span><b>Correction proposée.</b> <span id="v-fix"></span></span></div>
 </dialog>
 
 <script>
@@ -84,18 +87,19 @@ dialog.viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;anim
   var TYPES={err:"Erreur",chk:"À vérifier",voc:"Vocabulaire",upd:"Mise à jour"};
   var TYPE_DOT={err:"d-none",chk:"d-part",voc:"d-prac",upd:"d-pol"};
   var fixes=[
-    {p:3,where:"À propos d'Ayming",cur:"« pour garantir une mise en oeuvre efficace des dispositifs réglementaires »",fix:"« pour faciliter une mise en œuvre efficace… ». Ayming ne s'engage pas sur un résultat dans ses supports.",t:"voc",img:"p03-garantir"},
-    {p:12,where:"P3, constat",cur:"Frais professionnels : « 54 millions d'euros sur les 800 millions au total » en 2023",fix:"Citer le bilan URSSAF d'où vient le chiffre, ou le retirer. Il n'apparaît pas dans les bilans publiés, et 800 M€ correspond à un chiffre 2022 de lutte contre la fraude.",t:"chk",img:"p12-chiffre"},
-    {p:17,where:"Axe 2, constat",cur:"« La doctrine administrative s'est imposée en pratique comme une source de droit… » apparaît en gras, puis à nouveau mot pour mot juste en dessous",fix:"Garder une seule occurrence.",t:"err",img:"p17-doublon"},
-    {p:24,where:"P8, constat",cur:"Ne mentionne pas la réforme de l'incapacité permanente",fix:"Ajouter une phrase : depuis le 1er novembre 2026, deux taux (professionnel et fonctionnel) sont fixés, ce qui multiplie les décisions à lire.",t:"upd",src:{label:"Tissot",url:"https://www.editions-tissot.fr/actualite/sante-securite/reforme-de-lindemnisation-de-lincapacite-permanente-at-mp-le-nouveau-regime-applicable-est-precise"}},
-    {p:24,where:"P8, mesure 2",cur:"Le titre porte sur l'inopposabilité, mais le paragraphe décrit une expertise contradictoire avant la CMRA, qui est l'objet de la mesure 3",fix:"Rédiger un paragraphe sur l'inopposabilité, ou fusionner avec la mesure 3.",t:"err",img:"p24-mesure2"},
-    {p:25,where:"P8, mesure 3",cur:"« l'inopposabilité prévue en Proposition 12 »",fix:"« l'inopposabilité prévue à la mesure 2 ». La mesure 4 donne déjà la bonne référence.",t:"err",img:"p25-renvoi"},
-    {p:25,where:"P8, mesures 3 et 4",cur:"La même phrase (« lève l'obstacle pratique constaté aujourd'hui… ») figure dans les deux mesures",fix:"Garder la phrase dans la mesure 4 seulement.",t:"err",img:"p25-repetition"},
-    {p:26,where:"P9, constat",cur:"« Depuis 2024, la répartition du coût moyen de l'AT/MP est désormais partagée à égalité »",fix:"« Depuis le décret du 5 juillet 2024, le coût de tous les AT/MP des intérimaires est partagé à égalité. Il pèse sur les taux à partir de 2026, avec un plein effet en 2028. » Avant, le partage ne visait que les sinistres graves.",t:"chk",img:"p26-depuis-2024",src:{label:"Légifrance",url:"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049892022"}},
-    {p:34,where:"P12, constat",cur:"Ne mentionne pas les règles entrées en vigueur en 2026",fix:"Ajouter : arrêts plafonnés à 31 jours puis 62 jours par prolongation depuis le 1er septembre 2026 (décret du 12 juin 2026), et contre-visite qui permet d'arrêter le maintien de salaire (loi contre les fraudes de 2026).",t:"upd",src:{label:"Code du travail numérique",url:"https://code.travail.gouv.fr/actualite/arret-maladie-quelle-est-la-duree-maximale-dun-arret-de-travail-a-partir-du-1er-septembre-2026"}},
-    {p:45,where:"Conclusion",cur:"« En assistant les employeurs dans leurs démarches »",fix:"« En accompagnant les employeurs dans leurs démarches ».",t:"voc",img:"p45-assistant"}
+    {p:3,where:"À propos d'Ayming",issue:"« Garantir » engage Ayming sur un résultat, un mot exclu de nos supports.",cur:"« pour [[garantir]] une mise en oeuvre efficace des dispositifs réglementaires »",fix:"« pour faciliter une mise en œuvre efficace… ».",t:"voc",img:"p03-garantir"},
+    {p:12,where:"P3, constat",issue:"Chiffre introuvable dans les bilans URSSAF publiés.",cur:"Frais professionnels : « [[54 millions d'euros sur les 800 millions au total]] » en 2023",fix:"Citer le bilan URSSAF d'où vient le chiffre, ou le retirer. 800 M€ correspond à un chiffre 2022 de lutte contre la fraude.",t:"chk",img:"p12-chiffre"},
+    {p:17,where:"Axe 2, constat",issue:"La même phrase est imprimée deux fois de suite.",cur:"« [[La doctrine administrative s'est imposée en pratique comme une source de droit…]] » en gras, puis mot pour mot juste en dessous",fix:"Garder une seule occurrence.",t:"err",img:"p17-doublon"},
+    {p:24,where:"P8, constat",issue:"La réforme de l'incapacité permanente du 1er novembre 2026 manque.",cur:"Le constat décrit la CMRA sans mentionner la réforme",fix:"Ajouter une phrase : depuis le 1er novembre 2026, deux taux (professionnel et fonctionnel) sont fixés, ce qui multiplie les décisions à lire.",t:"upd",src:{label:"Tissot",url:"https://www.editions-tissot.fr/actualite/sante-securite/reforme-de-lindemnisation-de-lincapacite-permanente-at-mp-le-nouveau-regime-applicable-est-precise"}},
+    {p:24,where:"P8, mesure 2",issue:"Le texte ne correspond pas au titre de la mesure.",cur:"Titre : « Prévoir l'[[inopposabilité]] ». Texte : « Rétablir… une [[expertise médicale judiciaire contradictoire]] », qui est l'objet de la mesure 3",fix:"Rédiger un paragraphe sur l'inopposabilité, ou fusionner avec la mesure 3.",t:"err",img:"p24-mesure2"},
+    {p:25,where:"P8, mesure 3",issue:"Mauvais renvoi : l'inopposabilité est la mesure 2, pas la proposition 12.",cur:"« l'inopposabilité prévue en [[Proposition 12]] »",fix:"« l'inopposabilité prévue à la mesure 2 ». La mesure 4 donne déjà la bonne référence.",t:"err",img:"p25-renvoi"},
+    {p:25,where:"P8, mesures 3 et 4",issue:"La même phrase figure dans deux mesures voisines.",cur:"« [[lève l'obstacle pratique constaté aujourd'hui…]] » dans la mesure 3 et dans la mesure 4",fix:"Garder la phrase dans la mesure 4 seulement.",t:"err",img:"p25-repetition"},
+    {p:26,where:"P9, constat",issue:"« Depuis 2024 » est inexact : le décret date de juillet 2024 et s'applique aux taux 2026.",cur:"« [[Depuis 2024]], la répartition du coût moyen de l'AT/MP est désormais partagée à égalité »",fix:"« Depuis le décret du 5 juillet 2024, le coût de tous les AT/MP des intérimaires est partagé à égalité. Il pèse sur les taux à partir de 2026, avec un plein effet en 2028. »",t:"chk",img:"p26-depuis-2024",src:{label:"Légifrance",url:"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049892022"}},
+    {p:34,where:"P12, constat",issue:"Les règles 2026 sur les arrêts manquent.",cur:"Le constat ne cite ni le plafond des arrêts ni la loi contre les fraudes",fix:"Ajouter : arrêts plafonnés à 31 jours puis 62 jours par prolongation depuis le 1er septembre 2026 (décret du 12 juin 2026), et contre-visite qui permet d'arrêter le maintien de salaire (loi contre les fraudes de 2026).",t:"upd",src:{label:"Code du travail numérique",url:"https://code.travail.gouv.fr/actualite/arret-maladie-quelle-est-la-duree-maximale-dun-arret-de-travail-a-partir-du-1er-septembre-2026"}},
+    {p:45,where:"Conclusion",issue:"« Assister » est un mot exclu de nos supports.",cur:"« En [[assistant]] les employeurs dans leurs démarches »",fix:"« En accompagnant les employeurs dans leurs démarches ».",t:"voc",img:"p45-assistant"}
   ];
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function hl(s){return esc(s).replace(/\[\[(.+?)\]\]/g,'<span class="hit">$1</span>');}
   function count(f){return fixes.filter(f).length;}
 
   var ft=document.getElementById('f-type'), shown=[];
@@ -109,7 +113,7 @@ dialog.viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;anim
       var links=[];
       if(f.img)links.push('<button data-i="'+i+'">Voir la capture</button>');
       if(f.src)links.push('<a href="'+f.src.url+'" target="_blank" rel="noopener">'+esc(f.src.label)+' ↗</a>');
-      return '<tr><td class="n">'+f.p+'</td><td class="prop">'+esc(f.where)+'</td><td data-l="Texte actuel">'+esc(f.cur)+'</td><td data-l="Correction proposée">'+esc(f.fix)+'</td><td data-l="Type"><span class="status"><span class="dot '+TYPE_DOT[f.t]+'"></span>'+TYPES[f.t]+'</span></td><td data-l="Capture">'+img+'</td><td data-l="Lien"><div class="links">'+(links.join('')||'<span class="dim">·</span>')+'</div></td></tr>';
+      return '<tr><td class="n">'+f.p+'</td><td class="prop">'+esc(f.where)+'</td><td data-l="Problème"><b class="issue">'+esc(f.issue)+'</b><span class="cur">'+hl(f.cur)+'</span></td><td data-l="Correction proposée">'+esc(f.fix)+'</td><td data-l="Type"><span class="status"><span class="dot '+TYPE_DOT[f.t]+'"></span>'+TYPES[f.t]+'</span></td><td data-l="Capture">'+img+'</td><td data-l="Lien"><div class="links">'+(links.join('')||'<span class="dim">·</span>')+'</div></td></tr>';
     }).join('');
     document.getElementById('count2').textContent=list.length+' sur '+fixes.length;
     var b=document.getElementById('fb-type');b.classList.toggle('on',!!ft.value);b.querySelector('.lbl').textContent=ft.value?TYPES[ft.value]:'Type';
@@ -126,6 +130,7 @@ dialog.viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;anim
     document.getElementById('v-title').textContent='Page '+f.p+' · '+TYPES[f.t];
     document.getElementById('v-where').textContent=f.where;
     document.getElementById('v-fix').textContent=f.fix;
+    document.getElementById('v-issue').textContent=f.issue;
     document.getElementById('v-pos').textContent=(k+1)+' sur '+shown.length;
     document.getElementById('v-prev').disabled=k===0;
     document.getElementById('v-next').disabled=k===shown.length-1;
