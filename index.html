@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<title>Livre blanc 2026 et offres RH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+<style>
+/* Ayming tokens (DESIGN.md) on the interface-design system: flat surfaces, hairlines, one accent. */
+:root{
+  --accent:#00AEEF; --navy:#004A76; --mid:#0072B6;
+  --strong:#0f172a; --body:#4A5B68; --muted:#6b7280; --faint:#9ca3af;
+  --canvas:#f8fafc; --raised:#ffffff; --line:#e6ebf1; --line-soft:#eef2f6; --hover:#f4f8fb;
+  --tint:rgba(0,174,239,0.10);
+  --ok:#00B08B; --none:#DC533A; --part:#00AEEF; --prac:#004A76; --pol:#B2B1BB;
+  --font:'Lato',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--canvas);color:var(--strong);font-family:var(--font);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:48px max(16px,env(safe-area-inset-right,0px)) 72px max(16px,env(safe-area-inset-left,0px));display:grid;gap:48px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+h1{font-size:30px;line-height:1.25;font-weight:700;color:var(--navy);margin:8px 0 10px;text-wrap:balance}
+h2{font-size:20px;line-height:1.3;font-weight:700;color:var(--navy);margin:0;text-wrap:balance}
+h3{font-size:16px;font-weight:700;color:var(--strong);margin:0}
+p{margin:0}
+.lead{font-size:16px;color:var(--muted);max-width:820px}
+section{display:grid;gap:16px;min-width:0}
+
+/* Header figure */
+.figure{display:grid;gap:14px;max-width:820px;margin-top:28px}
+.big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.big b{font-size:48px;line-height:1;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.big b small{font-size:24px;color:var(--faint);font-weight:400}
+.big span{font-size:16px;color:var(--body)}
+.bar{display:flex;height:8px;border-radius:9999px;overflow:hidden;background:var(--line-soft);gap:2px}
+.bar i{display:block;height:100%}
+.keys{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted)}
+.keys b{color:var(--strong);font-variant-numeric:tabular-nums;margin-left:2px}
+.stats{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:6px}
+.stat{display:grid;gap:2px}
+.stat b{font-size:20px;font-weight:700;color:var(--strong);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;flex:none}
+.d-ok{background:var(--ok)} .d-part{background:var(--part)} .d-prac{background:var(--prac)} .d-none{background:var(--none)} .d-pol{background:var(--pol)}
+
+/* View: toolbar + table, flat with hairlines */
+.view{background:var(--raised);border:1px solid var(--line);border-radius:12px;min-width:0}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.search{position:relative;flex:1 1 220px;max-width:280px}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--faint);fill:none;stroke-width:2;pointer-events:none}
+.search input{width:100%;font:inherit;font-size:13px;padding:6px 10px 6px 30px;border:1px solid var(--line);border-radius:8px;background:var(--raised);color:var(--strong)}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--tint)}
+.fbtn{position:relative;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--body);border-radius:8px;padding:6px 10px;cursor:pointer;border:1px solid transparent}
+.fbtn:hover{background:var(--hover)}
+.fbtn.on{background:var(--tint);color:var(--navy);font-weight:700}
+.fbtn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex:none}
+.fbtn select{position:absolute;inset:0;opacity:0;cursor:pointer;font:inherit;width:100%}
+.fbtn:focus-within{box-shadow:0 0 0 2px var(--accent)}
+.spacer{flex:1}
+.meta{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.clear{font:inherit;font-size:13px;color:var(--mid);background:none;border:none;cursor:pointer;padding:6px 4px;font-weight:700;visibility:hidden}
+.clear.show{visibility:visible}
+.clear:focus-visible,th button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+table{border-collapse:collapse;width:100%;table-layout:fixed}
+thead th{text-align:left;padding:0;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+thead th > span,thead th > button{display:flex;align-items:center;gap:4px;padding:10px 12px;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;background:none;border:none;width:100%;text-align:left}
+thead th > button{cursor:pointer}
+thead th > button:hover{color:var(--navy)}
+th .arrow{font-size:9px;opacity:.3}
+th[aria-sort] .arrow{opacity:1;color:var(--accent)}
+tbody td{padding:12px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--body);overflow-wrap:anywhere}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:not(.group):hover td{background:var(--hover)}
+.n{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.prop{color:var(--strong);font-weight:700}
+tr.group td{padding:18px 12px 8px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--navy);border-bottom:1px solid var(--line)}
+tr.group td span{color:var(--faint);font-weight:400;letter-spacing:0;text-transform:none;font-size:12px;margin-left:8px}
+tr.group:hover td{background:none}
+.empty td{text-align:center;color:var(--muted);padding:28px}
+ul.offers{margin:0;padding-left:16px;text-align:left}
+.kind{display:block;font-size:12px;font-weight:700;color:var(--mid);margin-bottom:2px}
+.dim{color:var(--faint)}
+.status{display:inline-flex;align-items:baseline;color:var(--strong);font-weight:700;font-size:13px}
+.prio{font-weight:700;font-variant-numeric:tabular-nums;color:var(--faint)}
+.prio.hi{color:var(--navy)}
+
+.shot{display:block;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;transition:border-color .15s ease-out}
+.shot:hover{border-color:var(--accent)}
+.shot img{display:block;width:100%;height:auto}
+.src a{color:var(--mid);font-weight:700;text-decoration:none}
+.src a:hover{text-decoration:underline}
+
+/* Recommendation list */
+.reco{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);max-width:940px}
+.reco li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.reco .k{font-size:20px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;line-height:1.3}
+.reco p{color:var(--body);margin-top:4px}
+.note{max-width:940px;display:grid;gap:8px}
+.note ul{margin:0;padding-left:18px;color:var(--body);display:grid;gap:4px}
+.note p{color:var(--body)}
+a{color:var(--mid)}
+.foot{font-size:12px;color:var(--muted);max-width:940px}
+
+/* Column widths */
+#map col.c-n{width:56px} #map col.c-prop{width:18%} #map col.c-off{width:17%} #map col.c-st{width:150px} #map col.c-pis{width:22%} #map col.c-why{width:auto} #map col.c-pr{width:92px}
+#fix col.c-p{width:56px} #fix col.c-w{width:120px} #fix col.c-cur{width:22%} #fix col.c-fix{width:auto} #fix col.c-t{width:110px} #fix col.c-img{width:210px} #fix col.c-src{width:96px}
+
+/* Narrow screens: rows become stacked blocks, never a side scroll */
+@media (max-width:960px){
+  table,thead,tbody,tr,td{display:block;width:100%}
+  thead{display:none}
+  tbody tr:not(.group){padding:12px;border-bottom:1px solid var(--line)}
+  tbody td{border:none;padding:3px 0}
+  tbody td[data-l]::before{content:attr(data-l);display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--faint);margin-top:6px}
+  tbody td.n{font-size:16px}
+  .shot{max-width:360px}
+  td.nil{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Livre blanc Ayming 2026 · Offres RH France</span>
+  <h1>Quelles offres en face des 16 propositions ?</h1>
+  <p class="lead">Chaque proposition du livre blanc « 16 propositions pour un système de protection sociale plus juste et plus efficace » est rapprochée de nos offres. Quand une offre manque, une piste est proposée.</p>
+  <div class="figure">
+    <div class="big"><b id="covered">11<small> sur 16</small></b><span>propositions trouvent déjà une offre Ayming, au moins en partie</span></div>
+    <div class="bar" id="bar" aria-hidden="true"></div>
+    <div class="keys" id="keys"></div>
+    <div class="stats">
+      <div class="stat"><b>8</b><span>pistes d'offre proposées</span></div>
+      <div class="stat"><b>3</b><span>à lancer en premier</span></div>
+      <div class="stat"><b id="nfix">10</b><span>corrections avant publication</span></div>
+    </div>
+  </div>
+</header>
+
+<section aria-labelledby="t1">
+  <h2 id="t1">Les propositions face à nos offres</h2>
+  <div class="view">
+    <div class="toolbar" role="toolbar" aria-label="Filtres">
+      <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Rechercher" aria-label="Rechercher une proposition ou une offre"></label>
+      <span class="fbtn" id="fb-status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg><span class="lbl">Statut</span><select id="f-status" aria-label="Filtrer par statut"></select></span>
+      <span class="fbtn" id="fb-axe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="lbl">Axe</span><select id="f-axe" aria-label="Filtrer par axe"></select></span>
+      <span class="fbtn" id="fb-kind"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">Piste</span><select id="f-kind" aria-label="Filtrer par type de piste"></select></span>
+      <span class="fbtn" id="fb-group"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/></svg><span class="lbl">Grouper par axe</span><select id="f-group" aria-label="Grouper les lignes"><option value="axe">Grouper par axe</option><option value="status">Grouper par statut</option><option value="none">Sans regroupement</option></select></span>
+      <span class="spacer"></span>
+      <button class="clear" id="clear">Réinitialiser</button>
+      <span class="meta" id="count"></span>
+    </div>
+    <table id="map">
+      <colgroup><col class="c-n"><col class="c-prop"><col class="c-off"><col class="c-st"><col class="c-pis"><col class="c-why"><col class="c-pr"></colgroup>
+      <thead><tr>
+        <th data-key="n" aria-sort="ascending"><button>N° <span class="arrow">▲</span></button></th>
+        <th><span>Proposition</span></th>
+        <th><span>Offres aujourd'hui</span></th>
+        <th data-key="status"><button>Statut <span class="arrow">▲</span></button></th>
+        <th><span>Piste proposée</span></th>
+        <th><span>Pourquoi maintenant</span></th>
+        <th data-key="prio"><button>Priorité <span class="arrow">▲</span></button></th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="t2">
+  <h2 id="t2">Les trois pistes à lancer en premier</h2>
+  <ol class="reco">
+    <li><span class="k">1</span><div><h3>Intérim, la part AT/MP de l'entreprise utilisatrice</h3><p>La règle a changé (décret du 5 juillet 2024) et pèse sur les taux de 2026 à 2028. L'entreprise utilisatrice paie sans pouvoir agir seule auprès de la CPAM. Aucun concurrent n'a d'offre dédiée.</p></div></li>
+    <li><span class="k">2</span><div><h3>Absentéisme maladie</h3><p>Les arrêts sont plafonnés depuis septembre 2026 et la loi contre les fraudes change la contre-visite. Nos données IJ et DSN donnent un avantage sur les sociétés qui ne vendent que la contre-visite.</p></div></li>
+    <li><span class="k">3</span><div><h3>NAO sous RGDU</h3><p>Un module court à ajouter à l'offre charges sociales. La saison des NAO a commencé.</p></div></li>
+  </ol>
+  <div class="note">
+    <h3>P8, taux d'IP et CMRA : Ayming le fait déjà, sans offre qui le nomme</h3>
+    <ul>
+      <li>Le témoignage client STEF cite le travail sur « les taux d'incapacité » et sur « les opportunités de contestation », avec des cabinets d'avocats indépendants (<a href="https://www.ayming.fr/temoignages-clients/stef-ameliore-pilotage-arret-travail-et-risques-professionnels/" target="_blank" rel="noopener">témoignage STEF</a>).</li>
+      <li>Ayming a tenu en 2019 un webinaire sur la procédure devant la CMRA (<a href="https://www.ayming.fr/wp-content/uploads/sites/11/2019/05/Prez_webinaire_Decret_contentieux.pdf" target="_blank" rel="noopener">support du webinaire</a>).</li>
+      <li>Le deck de la famille Gestion des AT/MP cite un réseau de médecins indépendants à côté des cabinets d'avocats.</li>
+    </ul>
+    <p>Il n'y a pas d'offre à créer. La décision porte sur un module visible dans Maîtriser les cotisations AT/MP, que Leyton vend déjà sous son propre nom.</p>
+  </div>
+</section>
+
+<section aria-labelledby="t3">
+  <h2 id="t3">Corrections à faire avant publication</h2>
+  <div class="view">
+    <div class="toolbar" role="toolbar" aria-label="Filtres des corrections">
+      <span class="fbtn" id="fb-type"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg><span class="lbl">Type</span><select id="f-type" aria-label="Filtrer par type de correction"></select></span>
+      <span class="spacer"></span>
+      <span class="meta" id="count2"></span>
+    </div>
+    <table id="fix">
+      <colgroup><col class="c-p"><col class="c-w"><col class="c-cur"><col class="c-fix"><col class="c-t"><col class="c-img"><col class="c-src"></colgroup>
+      <thead><tr><th><span>Page</span></th><th><span>Où</span></th><th><span>Texte actuel</span></th><th><span>Correction proposée</span></th><th><span>Type</span></th><th><span>Capture</span></th><th><span>Lien</span></th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<p class="foot">¹ Sources : texte du livre blanc lu en entier, fiches des offres RH France, recherche web du 23 novembre 2026. Les pistes de priorité 5 à 7 reposent sur une première recherche et demandent une vérification avant tout support client. Les numéros de page sont ceux du PDF.</p>
+</div>
+
+<script>
+(function(){
+  var AXES={1:"Axe 1 · Coût du travail",2:"Axe 2 · Sécurité juridique",3:"Axe 3 · Accidents du travail",4:"Axe 4 · Arrêts de travail"};
+  var ST={ok:"Couvert",part:"Couvert en partie",prac:"Pratiqué, pas formalisé",none:"Aucune offre",pol:"Position de principe"};
+  var ST_KEYS=["ok","part","prac","none","pol"];
+  var ST_ORDER={none:0,part:1,prac:2,ok:3,pol:4};
+  var KINDS=["Nouvelle offre","Module","Add-on","Volet","À formaliser"];
+  var rows=[
+    {n:1,axe:1,prop:"Recentrer les cotisations sur le financement des risques sociaux",offers:["Optimisation des charges sociales (les lignes versement mobilité, FNAL et PEEC se vérifient déjà)"],st:"pol"},
+    {n:2,axe:1,prop:"Neutraliser les effets de bord des allègements (RGDU, ICCP, heures sup, NAO, PPV)",offers:["Optimisation des charges sociales, qui traite déjà la RGDU sur les années passées"],st:"part",kind:"Module",kindOf:"Charges sociales",piste:"Simuler le coût d'une NAO sous RGDU, scénario par scénario, sur la paie du client.",why:"Le SMIC de référence de la RGDU reste gelé à sa valeur de janvier 2026, donc chaque hausse réduit l'allègement. C'est la saison des NAO, et le PLFSS 2027 est encore en débat.",prio:3},
+    {n:3,axe:1,prop:"Simplifier frais professionnels et avantages en nature",offers:["Optimisation des charges sociales","Accompagner un contrôle URSSAF"],st:"part",kind:"Nouvelle offre",kindOf:"sectorielle",piste:"Anticiper la fin de la DFS, fiabiliser frais professionnels et avantages en nature.",why:"La DFS baisse chaque année jusqu'à sa fin (2029 pour la propreté, 2032 pour le BTP, 2038 pour les journalistes). Le barème véhicule a changé en février 2025, et le régime des bornes de recharge s'arrête fin 2027.",prio:6},
+    {n:4,axe:2,prop:"Délai d'application pour toute nouvelle norme sur le coût du travail",offers:[],st:"pol"},
+    {n:5,axe:2,prop:"Neutraliser les redressements fondés sur une doctrine nouvelle, élargir le rescrit social",offers:["Accompagner un contrôle URSSAF, qui intervient une fois le contrôle lancé"],st:"part",kind:"Module",kindOf:"Contrôle URSSAF",piste:"Sécuriser une pratique avant le contrôle, avec un rescrit préparé avec le cabinet d'avocats indépendants choisi d'un commun accord.",why:"Le rescrit n'est plus possible une fois l'avis de contrôle reçu. L'accord tacite d'un contrôle passé se prouve mal, et la jurisprudence 2026 l'a confirmé.",prio:7},
+    {n:6,axe:2,prop:"Encadrer les revirements de jurisprudence",offers:["Optimisation des charges sociales"],st:"part",kind:"Module",kindOf:"Charges sociales",piste:"Chiffrer l'impact d'un revirement sur la paie, avec congés payés et maladie comme premier cas.",why:"Les anciens salariés peuvent réclamer leurs congés acquis pendant un arrêt maladie jusqu'au 24 avril 2027.",prio:7},
+    {n:7,axe:2,prop:"Harmoniser les garanties contre les changements de doctrine (social et fiscal)",offers:[],st:"pol"},
+    {n:8,axe:3,prop:"Améliorer le fonctionnement des CMRA",offers:["Maîtriser les cotisations AT/MP","Piloter les arrêts longue durée","ABO DAT"],st:"prac",kind:"À formaliser",kindOf:"Cotisations AT/MP",piste:"Lire les taux d'IP avec un médecin mandaté et mener les démarches devant la CMRA. Détail sous les pistes prioritaires.",why:"La réforme de l'incapacité permanente s'applique aux consolidations depuis le 1er novembre 2026. Il y a désormais deux taux, un professionnel et un fonctionnel.",prio:4},
+    {n:9,axe:3,prop:"Améliorer la gestion des AT dans l'intérim",offers:[],st:"none",kind:"Nouvelle offre",kindOf:"proche de Cotisations AT/MP",piste:"Intérim : maîtriser la part AT/MP de l'entreprise utilisatrice (lecture du compte employeur, projection 2026 à 2028, clauses avec l'ETT, prévention).",why:"Depuis le décret du 5 juillet 2024, l'entreprise utilisatrice paie la moitié du coût au lieu d'un tiers, sur tous les sinistres. Les taux 2026 sont les premiers touchés, avec un plein effet en 2028. Aucune offre concurrente dédiée n'a été trouvée.",prio:1},
+    {n:10,axe:3,prop:"Simplifier la gestion des AT imputables à un tiers",offers:["Récupérer les coûts des accidents causés par un tiers responsable"],st:"ok"},
+    {n:11,axe:3,prop:"Améliorer l'instruction des malaises",offers:["Déclarer un accident du travail (réserves motivées)","ABO DAT"],st:"part",kind:"Add-on",kindOf:"Déclarer un AT",piste:"Instruire un malaise dès la déclaration : faits, réserves sur un état antérieur, lecture médicale.",why:"59 % des accidents du travail mortels de 2024 sont liés à un malaise. La jurisprudence 2025-2026 rend la preuve contraire difficile.",prio:5},
+    {n:12,axe:4,prop:"Lutter contre les arrêts injustifiés ou trop longs",offers:["Piloter les arrêts longue durée (AT seulement)","IJ et activité non autorisée","Collecter et traiter les arrêts"],st:"part",kind:"Nouvelle offre",kindOf:"",piste:"Maîtriser l'absentéisme maladie : diagnostic sur les données DSN et IJ, contre-visites encadrées, plan de retour au travail.",why:"Depuis le 1er septembre 2026, un premier arrêt est plafonné à 31 jours et chaque prolongation à 62 jours. La loi contre les fraudes de 2026 permet à l'employeur d'arrêter le maintien de salaire après une contre-visite négative.",prio:2},
+    {n:13,axe:4,prop:"Faciliter les reprises anticipées et la coordination des acteurs",offers:[],st:"none",kind:"Volet",kindOf:"offre absentéisme maladie",piste:"Plan de retour à 30, 90 et 120 jours : visite de pré-reprise, rendez-vous de liaison, temps partiel thérapeutique.",why:"Même calendrier que P12.",prio:2},
+    {n:14,axe:4,prop:"Renforcer les contrôles",offers:["Piloter les arrêts longue durée (signalement à la CPAM, AT seulement)"],st:"part",kind:"Volet",kindOf:"offre absentéisme maladie",piste:"Contre-visite sur les arrêts maladie, organisée avec des médecins partenaires.",why:"Même calendrier que P12.",prio:2},
+    {n:15,axe:4,prop:"Assurer l'efficacité du dispositif « SOS Fraudes »",offers:["IJ et activité non autorisée","Signalement structuré dans Piloter les arrêts longue durée"],st:"ok"},
+    {n:16,axe:4,prop:"Choc émotionnel au travail et pouvoir de direction",offers:["Déclarer un accident du travail","Traiter un questionnaire de maladie professionnelle","Évaluer les risques professionnels (DUERP)"],st:"part",kind:"Add-on",kindOf:"Déclarer un AT",piste:"Même add-on que P11, étendu aux chocs émotionnels après un échange managérial.",why:"Les AT psychosociaux sont en hausse. Un entretien devenu disciplinaire peut être reconnu comme AT (Cass. 2025).",prio:5}
+  ];
+  var TYPES={err:"Erreur",chk:"À vérifier",voc:"Vocabulaire",upd:"Mise à jour"};
+  var TYPE_DOT={err:"d-none",chk:"d-part",voc:"d-prac",upd:"d-pol"};
+  var fixes=[
+    {p:3,where:"À propos d'Ayming",cur:"« pour garantir une mise en oeuvre efficace des dispositifs réglementaires »",fix:"« pour faciliter une mise en œuvre efficace… ». Ayming ne s'engage pas sur un résultat dans ses supports.",t:"voc",img:"p03-garantir"},
+    {p:12,where:"P3, constat",cur:"Frais professionnels : « 54 millions d'euros sur les 800 millions au total » en 2023",fix:"Citer le bilan URSSAF d'où vient le chiffre, ou le retirer. Il n'apparaît pas dans les bilans publiés, et 800 M€ correspond à un chiffre 2022 de lutte contre la fraude.",t:"chk",img:"p12-chiffre"},
+    {p:17,where:"Axe 2, constat",cur:"« La doctrine administrative s'est imposée en pratique comme une source de droit… » apparaît en gras, puis à nouveau mot pour mot juste en dessous",fix:"Garder une seule occurrence.",t:"err",img:"p17-doublon"},
+    {p:24,where:"P8, constat",cur:"Ne mentionne pas la réforme de l'incapacité permanente",fix:"Ajouter une phrase : depuis le 1er novembre 2026, deux taux (professionnel et fonctionnel) sont fixés, ce qui multiplie les décisions à lire.",t:"upd",src:{label:"Tissot",url:"https://www.editions-tissot.fr/actualite/sante-securite/reforme-de-lindemnisation-de-lincapacite-permanente-at-mp-le-nouveau-regime-applicable-est-precise"}},
+    {p:24,where:"P8, mesure 2",cur:"Le titre porte sur l'inopposabilité, mais le paragraphe décrit une expertise contradictoire avant la CMRA, qui est l'objet de la mesure 3",fix:"Rédiger un paragraphe sur l'inopposabilité, ou fusionner avec la mesure 3.",t:"err",img:"p24-mesure2"},
+    {p:25,where:"P8, mesure 3",cur:"« l'inopposabilité prévue en Proposition 12 »",fix:"« l'inopposabilité prévue à la mesure 2 ». La mesure 4 donne déjà la bonne référence.",t:"err",img:"p25-renvoi"},
+    {p:25,where:"P8, mesures 3 et 4",cur:"La même phrase (« lève l'obstacle pratique constaté aujourd'hui… ») figure dans les deux mesures",fix:"Garder la phrase dans la mesure 4 seulement.",t:"err",img:"p25-repetition"},
+    {p:26,where:"P9, constat",cur:"« Depuis 2024, la répartition du coût moyen de l'AT/MP est désormais partagée à égalité »",fix:"« Depuis le décret du 5 juillet 2024, le coût de tous les AT/MP des intérimaires est partagé à égalité. Il pèse sur les taux à partir de 2026, avec un plein effet en 2028. » Avant, le partage ne visait que les sinistres graves.",t:"chk",img:"p26-depuis-2024",src:{label:"Légifrance",url:"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049892022"}},
+    {p:34,where:"P12, constat",cur:"Ne mentionne pas les règles entrées en vigueur en 2026",fix:"Ajouter : arrêts plafonnés à 31 jours puis 62 jours par prolongation depuis le 1er septembre 2026 (décret du 12 juin 2026), et contre-visite qui permet d'arrêter le maintien de salaire (loi contre les fraudes de 2026).",t:"upd",src:{label:"Code du travail numérique",url:"https://code.travail.gouv.fr/actualite/arret-maladie-quelle-est-la-duree-maximale-dun-arret-de-travail-a-partir-du-1er-septembre-2026"}},
+    {p:45,where:"Conclusion",cur:"« En assistant les employeurs dans leurs démarches »",fix:"« En accompagnant les employeurs dans leurs démarches ».",t:"voc",img:"p45-assistant"}
+  ];
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function status(st){return '<span class="status"><span class="dot d-'+st+'"></span>'+ST[st]+'</span>';}
+  function count(arr,f){return arr.filter(f).length;}
+
+  // Header bar and keys
+  var total=rows.length;
+  document.getElementById('bar').innerHTML=ST_KEYS.map(function(k){var c=count(rows,function(r){return r.st===k;});return c?'<i class="d-'+k+'" style="flex:'+c+'"></i>':'';}).join('');
+  document.getElementById('keys').innerHTML=ST_KEYS.map(function(k){return '<span><span class="dot d-'+k+'"></span>'+ST[k]+' <b>'+count(rows,function(r){return r.st===k;})+'</b></span>';}).join('');
+  document.getElementById('nfix').textContent=fixes.length;
+
+  var fs=document.getElementById('f-status'),fa=document.getElementById('f-axe'),fk=document.getElementById('f-kind'),fg=document.getElementById('f-group'),q=document.getElementById('q');
+  fs.innerHTML='<option value="">Tous les statuts</option>'+ST_KEYS.map(function(k){return '<option value="'+k+'">'+ST[k]+' ('+count(rows,function(r){return r.st===k;})+')</option>';}).join('');
+  fa.innerHTML='<option value="">Tous les axes</option>'+Object.keys(AXES).map(function(k){return '<option value="'+k+'">'+AXES[k]+'</option>';}).join('');
+  fk.innerHTML='<option value="">Toutes les pistes</option>'+KINDS.map(function(k){return '<option value="'+k+'">'+k+' ('+count(rows,function(r){return r.kind===k;})+')</option>';}).join('')+'<option value="-">Sans piste ('+count(rows,function(r){return !r.kind;})+')</option>';
+
+  var sort={key:'n',dir:1};
+  function label(id,sel,base,isDefault){var b=document.getElementById(id);var v=sel.value;var on=!!v&&!isDefault;b.classList.toggle('on',on);b.querySelector('.lbl').textContent=on||id==='fb-group'?sel.options[sel.selectedIndex].text.replace(/ \(\d+\)$/,''):base;}
+
+  function render(){
+    var term=q.value.trim().toLowerCase();
+    var list=rows.filter(function(r){
+      if(fs.value&&r.st!==fs.value)return false;
+      if(fa.value&&String(r.axe)!==fa.value)return false;
+      if(fk.value==='-'&&r.kind)return false;
+      if(fk.value&&fk.value!=='-'&&r.kind!==fk.value)return false;
+      if(term){var hay=[r.prop,r.offers.join(' '),r.piste||'',r.why||'',ST[r.st],'p'+r.n].join(' ').toLowerCase();if(hay.indexOf(term)<0)return false;}
+      return true;
+    });
+    list.sort(function(a,b){
+      var va,vb;
+      if(sort.key==='status'){va=ST_ORDER[a.st];vb=ST_ORDER[b.st];}
+      else if(sort.key==='prio'){va=a.prio||99;vb=b.prio||99;}
+      else{va=a.n;vb=b.n;}
+      return (va-vb)*sort.dir||a.n-b.n;
+    });
+    var groupBy=fg.value,html='',last=null;
+    list.forEach(function(r){
+      var g=groupBy==='axe'?r.axe:groupBy==='status'?r.st:null;
+      if(g!==null&&g!==last){
+        var n=list.filter(function(x){return (groupBy==='axe'?x.axe:x.st)===g;}).length;
+        html+='<tr class="group"><td colspan="7">'+(groupBy==='axe'?AXES[g]:ST[g])+'<span>'+n+' proposition'+(n>1?'s':'')+'</span></td></tr>';
+        last=g;
+      }
+      var offers=r.offers.length?(r.offers.length>1?'<ul class="offers">'+r.offers.map(function(o){return '<li>'+esc(o)+'</li>';}).join('')+'</ul>':esc(r.offers[0])):'<span class="dim">Aucune</span>';
+      var piste=r.kind?'<span class="kind">'+esc(r.kind)+(r.kindOf?' · '+esc(r.kindOf):'')+'</span>'+esc(r.piste):'<span class="dim">'+(r.st==='ok'?"L'offre existe":"Pas d'offre à créer")+'</span>';
+      var pr=r.prio?'<span class="prio'+(r.prio<=3?' hi':'')+'">'+r.prio+'</span>':'<span class="dim">·</span>';
+      html+='<tr><td class="n">P'+r.n+'</td><td class="prop">'+esc(r.prop)+'</td><td data-l="Offres aujourd\'hui">'+offers+'</td><td data-l="Statut">'+status(r.st)+'</td><td data-l="Piste proposée">'+piste+'</td><td data-l="Pourquoi maintenant"'+(r.why?'':' class="nil"')+'>'+(r.why?esc(r.why):'<span class="dim">·</span>')+'</td><td data-l="Priorité"'+(r.prio?'':' class="nil"')+'>'+pr+'</td></tr>';
+    });
+    if(!list.length)html='<tr class="empty"><td colspan="7">Aucune proposition ne correspond à ces filtres.</td></tr>';
+    document.querySelector('#map tbody').innerHTML=html;
+    document.getElementById('count').textContent=list.length+' sur '+total;
+    var active=fs.value||fa.value||fk.value||term||fg.value!=='axe'||sort.key!=='n'||sort.dir!==1;
+    document.getElementById('clear').classList.toggle('show',!!active);
+    label('fb-status',fs,'Statut');label('fb-axe',fa,'Axe');label('fb-kind',fk,'Piste');label('fb-group',fg,'Grouper par axe',fg.value==='axe');
+    document.querySelectorAll('#map th[data-key]').forEach(function(th){
+      var on=th.dataset.key===sort.key;
+      if(on){th.setAttribute('aria-sort',sort.dir>0?'ascending':'descending');th.querySelector('.arrow').textContent=sort.dir>0?'▲':'▼';}
+      else{th.removeAttribute('aria-sort');th.querySelector('.arrow').textContent='▲';}
+    });
+  }
+  [fs,fa,fk,fg].forEach(function(s){s.addEventListener('change',render);});
+  q.addEventListener('input',render);
+  document.getElementById('clear').addEventListener('click',function(){fs.value='';fa.value='';fk.value='';fg.value='axe';q.value='';sort={key:'n',dir:1};render();});
+  document.querySelectorAll('#map th[data-key] button').forEach(function(b){
+    b.addEventListener('click',function(){var k=b.parentNode.dataset.key;if(sort.key===k)sort.dir*=-1;else sort={key:k,dir:1};if(k!=='n'&&fg.value==='axe')fg.value='none';render();});
+  });
+  render();
+
+  var ft=document.getElementById('f-type');
+  ft.innerHTML='<option value="">Tous les types</option>'+Object.keys(TYPES).map(function(k){return '<option value="'+k+'">'+TYPES[k]+' ('+count(fixes,function(f){return f.t===k;})+')</option>';}).join('');
+  function renderFix(){
+    var list=fixes.filter(function(f){return !ft.value||f.t===ft.value;});
+    document.querySelector('#fix tbody').innerHTML=list.map(function(f){
+      var img=f.img?'<a class="shot" href="captures/'+f.img+'.png" target="_blank" rel="noopener" title="Ouvrir la capture en grand"><img src="captures/'+f.img+'.png" alt="Page '+f.p+' du livre blanc, passage entouré" loading="lazy"></a>':'<span class="dim">Ajout, rien à entourer</span>';
+      var links=[];
+      if(f.img)links.push('<a href="captures/'+f.img+'.png" target="_blank" rel="noopener">Capture</a>');
+      if(f.src)links.push('<a href="'+f.src.url+'" target="_blank" rel="noopener">'+esc(f.src.label)+'</a>');
+      return '<tr><td class="n">'+f.p+'</td><td class="prop">'+esc(f.where)+'</td><td data-l="Texte actuel">'+esc(f.cur)+'</td><td data-l="Correction proposée">'+esc(f.fix)+'</td><td data-l="Type"><span class="status"><span class="dot '+TYPE_DOT[f.t]+'"></span>'+TYPES[f.t]+'</span></td><td data-l="Capture">'+img+'</td><td class="src" data-l="Lien">'+(links.join('<br>')||'<span class="dim">·</span>')+'</td></tr>';
+    }).join('');
+    document.getElementById('count2').textContent=list.length+' sur '+fixes.length;
+    label('fb-type',ft,'Type');
+  }
+  ft.addEventListener('change',renderFix);
+  renderFix();
+})();
+</script>
+</body>
+</html>
