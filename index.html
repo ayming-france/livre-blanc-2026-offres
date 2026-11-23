@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
 <link rel="stylesheet" href="style.css">
 <style>
-#map col.c-n{width:56px} #map col.c-prop{width:18%} #map col.c-off{width:17%} #map col.c-st{width:150px} #map col.c-pis{width:22%} #map col.c-why{width:auto} #map col.c-pr{width:92px}
+#map col.c-n{width:56px} #map col.c-prop{width:17%} #map col.c-st{width:140px} #map col.c-pis{width:25%} #map col.c-why{width:auto} #map col.c-off{width:16%} #map col.c-pr{width:92px}
+#map td.off{color:var(--muted)}
 
 </style>
 </head>
@@ -19,7 +20,7 @@
 
 <header>
   <h1>Livre blanc 2026 et offres RH</h1>
-  <p class="lead">Chaque ligne met une proposition du livre blanc face à ce que nous vendons aujourd'hui, puis dit quoi ajouter et pourquoi maintenant. Sur 16 propositions, 2 sont couvertes, 5 demandent un add-on à une offre existante, 5 une nouvelle offre, 1 un savoir-faire à formaliser, et 3 sont des positions de principe¹.</p>
+  <p class="lead">Pour chaque proposition du livre blanc, la piste à lancer, pourquoi maintenant, et ce que nous vendons déjà. Sur 16 propositions, 2 sont couvertes, 5 demandent un add-on à une offre existante, 5 une nouvelle offre, 1 un savoir-faire à formaliser, et 3 sont des demandes à l'État¹.</p>
   <nav class="tabs" aria-label="Pages">
     <a href="./" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Propositions et offres <span class="c">16</span></a>
     <a href="pistes.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Pistes à lancer <span class="c">3</span></a>
@@ -40,14 +41,14 @@
       <span class="meta" id="count"></span>
     </div>
     <table id="map">
-      <colgroup><col class="c-n"><col class="c-prop"><col class="c-off"><col class="c-st"><col class="c-pis"><col class="c-why"><col class="c-pr"></colgroup>
+      <colgroup><col class="c-n"><col class="c-prop"><col class="c-st"><col class="c-pis"><col class="c-why"><col class="c-off"><col class="c-pr"></colgroup>
       <thead><tr>
         <th data-key="n" aria-sort="ascending"><button>N° <span class="arrow">▲</span></button></th>
         <th><span>Proposition</span></th>
-        <th><span>Offres aujourd'hui</span></th>
         <th data-key="status"><button>Statut <span class="arrow">▲</span></button></th>
         <th><span>Piste proposée</span></th>
         <th><span>Pourquoi maintenant</span></th>
+        <th><span>Ce que nous vendons déjà</span></th>
         <th data-key="prio"><button>Priorité <span class="arrow">▲</span></button></th>
       </tr></thead>
       <tbody></tbody>
@@ -55,13 +56,13 @@
   </div>
 </section>
 
-<p class="foot">¹ Add-on : un service ajouté à une offre que le client connaît déjà. Nouvelle offre : rien de ce que nous vendons ne répond à la proposition, ou seulement une petite partie. À formaliser : nous le faisons déjà sans le vendre sous un nom. Position de principe : une demande faite aux pouvoirs publics, sans offre possible.<br>² Sources : texte du livre blanc lu en entier, fiches des offres RH France, recherche web du 23 novembre 2026. Les pistes de priorité 5 à 7 reposent sur une première recherche et demandent une vérification avant tout support client.</p>
+<p class="foot">¹ Add-on : un service ajouté à une offre que le client connaît déjà. Nouvelle offre : rien de ce que nous vendons ne répond à la proposition, ou seulement une petite partie. À formaliser : nous le faisons déjà sans le vendre sous un nom. Demande à l'État : la proposition demande un changement de loi, il n'y a rien à vendre.<br>² Sources : texte du livre blanc lu en entier, fiches des offres RH France, recherche web du 23 novembre 2026. Les pistes de priorité 5 à 7 reposent sur une première recherche et demandent une vérification avant tout support client.</p>
 </div>
 
 <script>
 (function(){
   var AXES={1:"Axe 1 · Coût du travail",2:"Axe 2 · Sécurité juridique",3:"Axe 3 · Accidents du travail",4:"Axe 4 · Arrêts de travail"};
-  var ST={ok:"Couvert",addon:"Add-on",new:"Nouvelle offre",prac:"À formaliser",pol:"Position de principe"};
+  var ST={ok:"Couvert",addon:"Add-on",new:"Nouvelle offre",prac:"À formaliser",pol:"Demande à l'État"};
   var ST_KEYS=["ok","addon","new","prac","pol"];
   var ST_ORDER={new:0,addon:1,prac:2,ok:3,pol:4};
   var rows=[
@@ -122,7 +123,7 @@
       var offers=r.offers.length?(r.offers.length>1?'<ul class="offers">'+r.offers.map(function(o){return '<li>'+esc(o)+'</li>';}).join('')+'</ul>':esc(r.offers[0])):'<span class="dim">Aucune</span>';
       var piste=r.piste?'<span class="kind">'+esc(r.on)+'</span>'+esc(r.piste):'<span class="dim">'+(r.st==='ok'?"L'offre existe":"Pas d'offre à créer")+'</span>';
       var pr=r.prio?'<span class="prio'+(r.prio<=3?' hi':'')+'">'+r.prio+'</span>':'<span class="dim">·</span>';
-      html+='<tr><td class="n">P'+r.n+'</td><td class="prop">'+esc(r.prop)+'</td><td data-l="Offres aujourd\'hui">'+offers+'</td><td data-l="Statut">'+status(r.st)+'</td><td data-l="Piste proposée">'+piste+'</td><td data-l="Pourquoi maintenant"'+(r.why?'':' class="nil"')+'>'+(r.why?esc(r.why):'<span class="dim">·</span>')+'</td><td data-l="Priorité"'+(r.prio?'':' class="nil"')+'>'+pr+'</td></tr>';
+      html+='<tr><td class="n">P'+r.n+'</td><td class="prop">'+esc(r.prop)+'</td><td data-l="Statut">'+status(r.st)+'</td><td data-l="Piste proposée">'+piste+'</td><td data-l="Pourquoi maintenant"'+(r.why?'':' class="nil"')+'>'+(r.why?esc(r.why):'<span class="dim">·</span>')+'</td><td class="off" data-l="Ce que nous vendons déjà">'+offers+'</td><td data-l="Priorité"'+(r.prio?'':' class="nil"')+'>'+pr+'</td></tr>';
     });
     if(!list.length)html='<tr class="empty"><td colspan="7">Aucune proposition ne correspond à ces filtres.</td></tr>';
     document.querySelector('#map tbody').innerHTML=html;
