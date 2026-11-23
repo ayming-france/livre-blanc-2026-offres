@@ -29,7 +29,7 @@ section{display:grid;gap:16px;min-width:0}
 .tabs .c{font-weight:400;color:var(--faint);font-variant-numeric:tabular-nums}
 
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px;flex:none}
-.d-ok{background:var(--ok)} .d-part{background:var(--part)} .d-prac{background:var(--prac)} .d-none{background:var(--none)} .d-pol{background:var(--pol)}
+.d-ok{background:var(--ok)} .d-addon{background:var(--part)} .d-new{background:var(--none)} .d-prac{background:var(--prac)} .d-none{background:var(--none)} .d-pol{background:var(--pol)}
 .status{display:inline-flex;align-items:baseline;color:var(--strong);font-weight:700;font-size:13px}
 
 /* View: toolbar + table, flat with hairlines */

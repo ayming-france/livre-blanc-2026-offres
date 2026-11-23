@@ -12,43 +12,6 @@
 <style>
 #map col.c-n{width:56px} #map col.c-prop{width:18%} #map col.c-off{width:17%} #map col.c-st{width:150px} #map col.c-pis{width:22%} #map col.c-why{width:auto} #map col.c-pr{width:92px}
 
-/* Priorities: one row per piste, the figure that justifies it on the right */
-.pistes{list-style:none;margin:0;padding:0;background:var(--raised);border:1px solid var(--line);border-radius:12px}
-.pistes > li{display:grid;grid-template-columns:44px minmax(0,1fr) 230px;gap:20px;padding:22px 24px;border-bottom:1px solid var(--line-soft)}
-.pistes > li:last-child{border-bottom:none}
-.pistes .k{font-size:24px;font-weight:700;line-height:1.2;color:var(--navy);font-variant-numeric:tabular-nums}
-.pistes .body{display:grid;gap:6px;align-content:start}
-.pistes .line{font-size:13px;color:var(--muted)}
-.pistes .line b{color:var(--strong);font-weight:700}
-.pistes .body p{color:var(--body);max-width:640px}
-.show{justify-self:start;margin-top:4px;font:inherit;font-size:13px;font-weight:700;color:var(--mid);background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
-.show:hover{text-decoration:underline}
-.show svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
-.fig{border-left:1px solid var(--line-soft);padding-left:20px;display:grid;gap:4px;align-content:start}
-.fig b{font-size:26px;line-height:1.15;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;white-space:nowrap}
-.fig b .arr{color:var(--faint);font-weight:400;margin:0 4px}
-.fig span{font-size:12px;color:var(--muted)}
-
-/* P8 evidence */
-.evidence{background:var(--raised);border:1px solid var(--line);border-radius:12px}
-.evidence header{display:grid;gap:6px;padding:20px 24px;border-bottom:1px solid var(--line-soft)}
-.evidence header p{color:var(--body);max-width:760px}
-.evidence dl{margin:0}
-.evidence .row{display:grid;grid-template-columns:200px minmax(0,1fr) 150px;gap:20px;padding:14px 24px;border-bottom:1px solid var(--line-soft);align-items:baseline}
-.evidence .row:last-child{border-bottom:none}
-.evidence dt{font-weight:700;color:var(--strong)}
-.evidence dd{margin:0;color:var(--body)}
-.evidence .src{justify-self:end;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
-.evidence .src:hover{text-decoration:underline}
-.evidence .src.none{color:var(--faint);font-weight:400}
-
-@media (max-width:860px){
-  .pistes > li{grid-template-columns:32px minmax(0,1fr);padding:18px 16px}
-  .fig{grid-column:2;border-left:none;padding-left:0;border-top:1px solid var(--line-soft);padding-top:10px}
-  .evidence .row{grid-template-columns:1fr;gap:4px;padding:14px 16px}
-  .evidence .src{justify-self:start}
-  .evidence header{padding:18px 16px}
-}
 </style>
 </head>
 <body>
@@ -56,9 +19,10 @@
 
 <header>
   <h1>Livre blanc 2026 et offres RH</h1>
-  <p class="lead">11 propositions sur 16 trouvent déjà une offre Ayming, au moins en partie. Pour les autres, une piste est proposée.</p>
+  <p class="lead">Chaque ligne met une proposition du livre blanc face à ce que nous vendons aujourd'hui, puis dit quoi ajouter et pourquoi maintenant. Sur 16 propositions, 2 sont couvertes, 5 demandent un add-on à une offre existante, 5 une nouvelle offre, 1 un savoir-faire à formaliser, et 3 sont des positions de principe¹.</p>
   <nav class="tabs" aria-label="Pages">
     <a href="./" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Propositions et offres <span class="c">16</span></a>
+    <a href="pistes.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Pistes à lancer <span class="c">3</span></a>
     <a href="corrections.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Corrections avant publication <span class="c">10</span></a>
   </nav>
 </header>
@@ -70,7 +34,6 @@
       <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Rechercher" aria-label="Rechercher une proposition ou une offre"></label>
       <span class="fbtn" id="fb-status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg><span class="lbl">Statut</span><select id="f-status" aria-label="Filtrer par statut"></select></span>
       <span class="fbtn" id="fb-axe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="lbl">Axe</span><select id="f-axe" aria-label="Filtrer par axe"></select></span>
-      <span class="fbtn" id="fb-kind"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">Piste</span><select id="f-kind" aria-label="Filtrer par type de piste"></select></span>
       <span class="fbtn" id="fb-group"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/></svg><span class="lbl">Grouper par axe</span><select id="f-group" aria-label="Grouper les lignes"><option value="axe">Grouper par axe</option><option value="status">Grouper par statut</option><option value="none">Sans regroupement</option></select></span>
       <span class="spacer"></span>
       <button class="clear" id="clear">Réinitialiser</button>
@@ -92,84 +55,32 @@
   </div>
 </section>
 
-<section aria-labelledby="t2">
-  <h2 id="t2">Les trois pistes à lancer en premier</h2>
-  <ol class="pistes">
-    <li>
-      <span class="k">1</span>
-      <div class="body">
-        <h3>Intérim, la part AT/MP de l'entreprise utilisatrice</h3>
-        <span class="line"><b>Nouvelle offre</b> · proche de Maîtriser les cotisations AT/MP · P9</span>
-        <p>Depuis le décret du 5 juillet 2024, l'entreprise utilisatrice paie la moitié du coût des AT/MP de ses intérimaires, sur tous les sinistres, sans pouvoir agir seule auprès de la CPAM. Aucun concurrent n'a d'offre dédiée.</p>
-        <button class="show" data-show="9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Voir la ligne dans le tableau</button>
-      </div>
-      <div class="fig"><b>1/3<span class="arr">→</span>1/2</b><span>part du coût AT/MP portée par l'entreprise utilisatrice, sur les taux 2026 à 2028</span></div>
-    </li>
-    <li>
-      <span class="k">2</span>
-      <div class="body">
-        <h3>Absentéisme maladie</h3>
-        <span class="line"><b>Nouvelle offre</b> · contre-visite et retour au travail · P12, P13, P14</span>
-        <p>Les arrêts sont plafonnés depuis septembre 2026, et la loi contre les fraudes laisse l'employeur arrêter le maintien de salaire après une contre-visite négative. Nos données IJ et DSN donnent un avantage sur les sociétés qui ne vendent que la contre-visite.</p>
-        <button class="show" data-show="12,13,14"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Voir les lignes dans le tableau</button>
-      </div>
-      <div class="fig"><b>31 j</b><span>durée maximale d'un premier arrêt depuis le 1er septembre 2026, puis 62 jours par prolongation</span></div>
-    </li>
-    <li>
-      <span class="k">3</span>
-      <div class="body">
-        <h3>NAO sous RGDU</h3>
-        <span class="line"><b>Module</b> · Optimisation des charges sociales · P2</span>
-        <p>Chaque hausse de salaire réduit l'allègement, car le SMIC de référence reste gelé pour 2026. Le module simule le coût réel de chaque scénario de NAO sur la paie du client. La saison des NAO a commencé.</p>
-        <button class="show" data-show="2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Voir la ligne dans le tableau</button>
-      </div>
-      <div class="fig"><b>−269 €</b><span>de RGDU par an pour un salarié à 120 % du SMIC augmenté de 3 % (exemple du livre blanc)</span></div>
-    </li>
-  </ol>
-</section>
-
-<section aria-labelledby="t3">
-  <div class="evidence">
-    <header>
-      <span class="status"><span class="dot d-prac"></span>P8 · Pratiqué, pas formalisé</span>
-      <h2 id="t3">Taux d'IP et CMRA, un savoir-faire déjà en place</h2>
-      <p>Il n'y a pas d'offre à créer. La décision porte sur un module visible dans Maîtriser les cotisations AT/MP, que Leyton vend déjà sous son propre nom.</p>
-    </header>
-    <dl>
-      <div class="row"><dt>Témoignage STEF</dt><dd>Cite le travail sur « les taux d'incapacité » et sur « les opportunités de contestation », avec des cabinets d'avocats indépendants.</dd><a class="src" href="https://www.ayming.fr/temoignages-clients/stef-ameliore-pilotage-arret-travail-et-risques-professionnels/" target="_blank" rel="noopener">ayming.fr ↗</a></div>
-      <div class="row"><dt>Webinaire 2019</dt><dd>Ayming a présenté la procédure devant la CMRA aux employeurs.</dd><a class="src" href="https://www.ayming.fr/wp-content/uploads/sites/11/2019/05/Prez_webinaire_Decret_contentieux.pdf" target="_blank" rel="noopener">Support PDF ↗</a></div>
-      <div class="row"><dt>Deck Gestion des AT/MP</dt><dd>Cite un réseau de médecins indépendants à côté des cabinets d'avocats.</dd><span class="src none">Deck interne</span></div>
-    </dl>
-  </div>
-</section>
-
-<p class="foot">¹ Sources : texte du livre blanc lu en entier, fiches des offres RH France, recherche web du 23 novembre 2026. Les pistes de priorité 5 à 7 reposent sur une première recherche et demandent une vérification avant tout support client.</p>
+<p class="foot">¹ Add-on : un service ajouté à une offre que le client connaît déjà. Nouvelle offre : rien de ce que nous vendons ne répond à la proposition, ou seulement une petite partie. À formaliser : nous le faisons déjà sans le vendre sous un nom. Position de principe : une demande faite aux pouvoirs publics, sans offre possible.<br>² Sources : texte du livre blanc lu en entier, fiches des offres RH France, recherche web du 23 novembre 2026. Les pistes de priorité 5 à 7 reposent sur une première recherche et demandent une vérification avant tout support client.</p>
 </div>
 
 <script>
 (function(){
   var AXES={1:"Axe 1 · Coût du travail",2:"Axe 2 · Sécurité juridique",3:"Axe 3 · Accidents du travail",4:"Axe 4 · Arrêts de travail"};
-  var ST={ok:"Couvert",part:"Couvert en partie",prac:"Pratiqué, pas formalisé",none:"Aucune offre",pol:"Position de principe"};
-  var ST_KEYS=["ok","part","prac","none","pol"];
-  var ST_ORDER={none:0,part:1,prac:2,ok:3,pol:4};
-  var KINDS=["Nouvelle offre","Module","Add-on","Volet","À formaliser"];
+  var ST={ok:"Couvert",addon:"Add-on",new:"Nouvelle offre",prac:"À formaliser",pol:"Position de principe"};
+  var ST_KEYS=["ok","addon","new","prac","pol"];
+  var ST_ORDER={new:0,addon:1,prac:2,ok:3,pol:4};
   var rows=[
     {n:1,axe:1,prop:"Recentrer les cotisations sur le financement des risques sociaux",offers:["Optimisation des charges sociales (les lignes versement mobilité, FNAL et PEEC se vérifient déjà)"],st:"pol"},
-    {n:2,axe:1,prop:"Neutraliser les effets de bord des allègements (RGDU, ICCP, heures sup, NAO, PPV)",offers:["Optimisation des charges sociales, qui traite déjà la RGDU sur les années passées"],st:"part",kind:"Module",kindOf:"Charges sociales",piste:"Simuler le coût d'une NAO sous RGDU, scénario par scénario, sur la paie du client.",why:"Le SMIC de référence de la RGDU reste gelé à sa valeur de janvier 2026, donc chaque hausse réduit l'allègement. C'est la saison des NAO, et le PLFSS 2027 est encore en débat.",prio:3},
-    {n:3,axe:1,prop:"Simplifier frais professionnels et avantages en nature",offers:["Optimisation des charges sociales","Accompagner un contrôle URSSAF"],st:"part",kind:"Nouvelle offre",kindOf:"sectorielle",piste:"Anticiper la fin de la DFS, fiabiliser frais professionnels et avantages en nature.",why:"La DFS baisse chaque année jusqu'à sa fin (2029 pour la propreté, 2032 pour le BTP, 2038 pour les journalistes). Le barème véhicule a changé en février 2025, et le régime des bornes de recharge s'arrête fin 2027.",prio:6},
+    {n:2,axe:1,prop:"Neutraliser les effets de bord des allègements (RGDU, ICCP, heures sup, NAO, PPV)",offers:["Optimisation des charges sociales, qui traite déjà la RGDU sur les années passées"],st:"addon",on:"Sur Optimisation des charges sociales",piste:"Simuler le coût d'une NAO sous RGDU, scénario par scénario, sur la paie du client.",why:"Le SMIC de référence de la RGDU reste gelé à sa valeur de janvier 2026, donc chaque hausse réduit l'allègement. C'est la saison des NAO, et le PLFSS 2027 est encore en débat.",prio:3},
+    {n:3,axe:1,prop:"Simplifier frais professionnels et avantages en nature",offers:["Optimisation des charges sociales","Accompagner un contrôle URSSAF"],st:"new",on:"Offre sectorielle",piste:"Anticiper la fin de la DFS, fiabiliser frais professionnels et avantages en nature.",why:"La DFS baisse chaque année jusqu'à sa fin (2029 pour la propreté, 2032 pour le BTP, 2038 pour les journalistes). Le barème véhicule a changé en février 2025, et le régime des bornes de recharge s'arrête fin 2027.",prio:6},
     {n:4,axe:2,prop:"Délai d'application pour toute nouvelle norme sur le coût du travail",offers:[],st:"pol"},
-    {n:5,axe:2,prop:"Neutraliser les redressements fondés sur une doctrine nouvelle, élargir le rescrit social",offers:["Accompagner un contrôle URSSAF, qui intervient une fois le contrôle lancé"],st:"part",kind:"Module",kindOf:"Contrôle URSSAF",piste:"Sécuriser une pratique avant le contrôle, avec un rescrit préparé avec le cabinet d'avocats indépendants choisi d'un commun accord.",why:"Le rescrit n'est plus possible une fois l'avis de contrôle reçu. L'accord tacite d'un contrôle passé se prouve mal, et la jurisprudence 2026 l'a confirmé.",prio:7},
-    {n:6,axe:2,prop:"Encadrer les revirements de jurisprudence",offers:["Optimisation des charges sociales"],st:"part",kind:"Module",kindOf:"Charges sociales",piste:"Chiffrer l'impact d'un revirement sur la paie, avec congés payés et maladie comme premier cas.",why:"Les anciens salariés peuvent réclamer leurs congés acquis pendant un arrêt maladie jusqu'au 24 avril 2027.",prio:7},
+    {n:5,axe:2,prop:"Neutraliser les redressements fondés sur une doctrine nouvelle, élargir le rescrit social",offers:["Accompagner un contrôle URSSAF, qui intervient une fois le contrôle lancé"],st:"addon",on:"Sur Accompagner un contrôle URSSAF",piste:"Sécuriser une pratique avant le contrôle, avec un rescrit préparé avec le cabinet d'avocats indépendants choisi d'un commun accord.",why:"Le rescrit n'est plus possible une fois l'avis de contrôle reçu. L'accord tacite d'un contrôle passé se prouve mal, et la jurisprudence 2026 l'a confirmé.",prio:7},
+    {n:6,axe:2,prop:"Encadrer les revirements de jurisprudence",offers:["Optimisation des charges sociales"],st:"addon",on:"Sur Optimisation des charges sociales",piste:"Chiffrer l'impact d'un revirement sur la paie, avec congés payés et maladie comme premier cas.",why:"Les anciens salariés peuvent réclamer leurs congés acquis pendant un arrêt maladie jusqu'au 24 avril 2027.",prio:7},
     {n:7,axe:2,prop:"Harmoniser les garanties contre les changements de doctrine (social et fiscal)",offers:[],st:"pol"},
-    {n:8,axe:3,prop:"Améliorer le fonctionnement des CMRA",offers:["Maîtriser les cotisations AT/MP","Piloter les arrêts longue durée","ABO DAT"],st:"prac",kind:"À formaliser",kindOf:"Cotisations AT/MP",piste:"Lire les taux d'IP avec un médecin mandaté et mener les démarches devant la CMRA. Détail sous les pistes prioritaires.",why:"La réforme de l'incapacité permanente s'applique aux consolidations depuis le 1er novembre 2026. Il y a désormais deux taux, un professionnel et un fonctionnel.",prio:4},
-    {n:9,axe:3,prop:"Améliorer la gestion des AT dans l'intérim",offers:[],st:"none",kind:"Nouvelle offre",kindOf:"proche de Cotisations AT/MP",piste:"Intérim : maîtriser la part AT/MP de l'entreprise utilisatrice (lecture du compte employeur, projection 2026 à 2028, clauses avec l'ETT, prévention).",why:"Depuis le décret du 5 juillet 2024, l'entreprise utilisatrice paie la moitié du coût au lieu d'un tiers, sur tous les sinistres. Les taux 2026 sont les premiers touchés, avec un plein effet en 2028. Aucune offre concurrente dédiée n'a été trouvée.",prio:1},
+    {n:8,axe:3,prop:"Améliorer le fonctionnement des CMRA",offers:["Maîtriser les cotisations AT/MP","Piloter les arrêts longue durée","ABO DAT"],st:"prac",on:"Dans Maîtriser les cotisations AT/MP",piste:"Lire les taux d'IP avec un médecin mandaté et mener les démarches devant la CMRA. Détail dans l'onglet Pistes à lancer.",why:"La réforme de l'incapacité permanente s'applique aux consolidations depuis le 1er novembre 2026. Il y a désormais deux taux, un professionnel et un fonctionnel.",prio:4},
+    {n:9,axe:3,prop:"Améliorer la gestion des AT dans l'intérim",offers:[],st:"new",on:"Proche de Maîtriser les cotisations AT/MP",piste:"Intérim : maîtriser la part AT/MP de l'entreprise utilisatrice (lecture du compte employeur, projection 2026 à 2028, clauses avec l'ETT, prévention).",why:"Depuis le décret du 5 juillet 2024, l'entreprise utilisatrice paie la moitié du coût au lieu d'un tiers, sur tous les sinistres. Les taux 2026 sont les premiers touchés, avec un plein effet en 2028. Aucune offre concurrente dédiée n'a été trouvée.",prio:1},
     {n:10,axe:3,prop:"Simplifier la gestion des AT imputables à un tiers",offers:["Récupérer les coûts des accidents causés par un tiers responsable"],st:"ok"},
-    {n:11,axe:3,prop:"Améliorer l'instruction des malaises",offers:["Déclarer un accident du travail (réserves motivées)","ABO DAT"],st:"part",kind:"Add-on",kindOf:"Déclarer un AT",piste:"Instruire un malaise dès la déclaration : faits, réserves sur un état antérieur, lecture médicale.",why:"59 % des accidents du travail mortels de 2024 sont liés à un malaise. La jurisprudence 2025-2026 rend la preuve contraire difficile.",prio:5},
-    {n:12,axe:4,prop:"Lutter contre les arrêts injustifiés ou trop longs",offers:["Piloter les arrêts longue durée (AT seulement)","IJ et activité non autorisée","Collecter et traiter les arrêts"],st:"part",kind:"Nouvelle offre",kindOf:"",piste:"Maîtriser l'absentéisme maladie : diagnostic sur les données DSN et IJ, contre-visites encadrées, plan de retour au travail.",why:"Depuis le 1er septembre 2026, un premier arrêt est plafonné à 31 jours et chaque prolongation à 62 jours. La loi contre les fraudes de 2026 permet à l'employeur d'arrêter le maintien de salaire après une contre-visite négative.",prio:2},
-    {n:13,axe:4,prop:"Faciliter les reprises anticipées et la coordination des acteurs",offers:[],st:"none",kind:"Volet",kindOf:"offre absentéisme maladie",piste:"Plan de retour à 30, 90 et 120 jours : visite de pré-reprise, rendez-vous de liaison, temps partiel thérapeutique.",why:"Même calendrier que P12.",prio:2},
-    {n:14,axe:4,prop:"Renforcer les contrôles",offers:["Piloter les arrêts longue durée (signalement à la CPAM, AT seulement)"],st:"part",kind:"Volet",kindOf:"offre absentéisme maladie",piste:"Contre-visite sur les arrêts maladie, organisée avec des médecins partenaires.",why:"Même calendrier que P12.",prio:2},
+    {n:11,axe:3,prop:"Améliorer l'instruction des malaises",offers:["Déclarer un accident du travail (réserves motivées)","ABO DAT"],st:"addon",on:"Sur Déclarer un accident du travail",piste:"Instruire un malaise dès la déclaration : faits, réserves sur un état antérieur, lecture médicale.",why:"59 % des accidents du travail mortels de 2024 sont liés à un malaise. La jurisprudence 2025-2026 rend la preuve contraire difficile.",prio:5},
+    {n:12,axe:4,prop:"Lutter contre les arrêts injustifiés ou trop longs",offers:["Piloter les arrêts longue durée (AT seulement)","IJ et activité non autorisée","Collecter et traiter les arrêts"],st:"new",on:"Offre absentéisme maladie",piste:"Maîtriser l'absentéisme maladie : diagnostic sur les données DSN et IJ, contre-visites encadrées, plan de retour au travail.",why:"Depuis le 1er septembre 2026, un premier arrêt est plafonné à 31 jours et chaque prolongation à 62 jours. La loi contre les fraudes de 2026 permet à l'employeur d'arrêter le maintien de salaire après une contre-visite négative.",prio:2},
+    {n:13,axe:4,prop:"Faciliter les reprises anticipées et la coordination des acteurs",offers:[],st:"new",on:"Volet de l'offre absentéisme maladie",piste:"Plan de retour à 30, 90 et 120 jours : visite de pré-reprise, rendez-vous de liaison, temps partiel thérapeutique.",why:"Même calendrier que P12.",prio:2},
+    {n:14,axe:4,prop:"Renforcer les contrôles",offers:["Piloter les arrêts longue durée (signalement à la CPAM, AT seulement)"],st:"new",on:"Volet de l'offre absentéisme maladie",piste:"Contre-visite sur les arrêts maladie, organisée avec des médecins partenaires.",why:"Même calendrier que P12.",prio:2},
     {n:15,axe:4,prop:"Assurer l'efficacité du dispositif « SOS Fraudes »",offers:["IJ et activité non autorisée","Signalement structuré dans Piloter les arrêts longue durée"],st:"ok"},
-    {n:16,axe:4,prop:"Choc émotionnel au travail et pouvoir de direction",offers:["Déclarer un accident du travail","Traiter un questionnaire de maladie professionnelle","Évaluer les risques professionnels (DUERP)"],st:"part",kind:"Add-on",kindOf:"Déclarer un AT",piste:"Même add-on que P11, étendu aux chocs émotionnels après un échange managérial.",why:"Les AT psychosociaux sont en hausse. Un entretien devenu disciplinaire peut être reconnu comme AT (Cass. 2025).",prio:5}
+    {n:16,axe:4,prop:"Choc émotionnel au travail et pouvoir de direction",offers:["Déclarer un accident du travail","Traiter un questionnaire de maladie professionnelle","Évaluer les risques professionnels (DUERP)"],st:"addon",on:"Sur Déclarer un accident du travail",piste:"Même add-on que P11, étendu aux chocs émotionnels après un échange managérial.",why:"Les AT psychosociaux sont en hausse. Un entretien devenu disciplinaire peut être reconnu comme AT (Cass. 2025).",prio:5}
   ];
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -177,10 +88,9 @@
   function count(arr,f){return arr.filter(f).length;}
   var total=rows.length;
 
-  var fs=document.getElementById('f-status'),fa=document.getElementById('f-axe'),fk=document.getElementById('f-kind'),fg=document.getElementById('f-group'),q=document.getElementById('q');
+  var fs=document.getElementById('f-status'),fa=document.getElementById('f-axe'),fg=document.getElementById('f-group'),q=document.getElementById('q');
   fs.innerHTML='<option value="">Tous les statuts</option>'+ST_KEYS.map(function(k){return '<option value="'+k+'">'+ST[k]+' ('+count(rows,function(r){return r.st===k;})+')</option>';}).join('');
   fa.innerHTML='<option value="">Tous les axes</option>'+Object.keys(AXES).map(function(k){return '<option value="'+k+'">'+AXES[k]+'</option>';}).join('');
-  fk.innerHTML='<option value="">Toutes les pistes</option>'+KINDS.map(function(k){return '<option value="'+k+'">'+k+' ('+count(rows,function(r){return r.kind===k;})+')</option>';}).join('')+'<option value="-">Sans piste ('+count(rows,function(r){return !r.kind;})+')</option>';
 
   var sort={key:'n',dir:1}, only=null;
   function label(id,sel,base,isDefault){var b=document.getElementById(id);var v=sel.value;var on=!!v&&!isDefault;b.classList.toggle('on',on);b.querySelector('.lbl').textContent=on||id==='fb-group'?sel.options[sel.selectedIndex].text.replace(/ \(\d+\)$/,''):base;}
@@ -191,8 +101,6 @@
       if(only&&only.indexOf(r.n)<0)return false;
       if(fs.value&&r.st!==fs.value)return false;
       if(fa.value&&String(r.axe)!==fa.value)return false;
-      if(fk.value==='-'&&r.kind)return false;
-      if(fk.value&&fk.value!=='-'&&r.kind!==fk.value)return false;
       if(term){var hay=[r.prop,r.offers.join(' '),r.piste||'',r.why||'',ST[r.st],'p'+r.n].join(' ').toLowerCase();if(hay.indexOf(term)<0)return false;}
       return true;
     });
@@ -212,34 +120,30 @@
         last=g;
       }
       var offers=r.offers.length?(r.offers.length>1?'<ul class="offers">'+r.offers.map(function(o){return '<li>'+esc(o)+'</li>';}).join('')+'</ul>':esc(r.offers[0])):'<span class="dim">Aucune</span>';
-      var piste=r.kind?'<span class="kind">'+esc(r.kind)+(r.kindOf?' · '+esc(r.kindOf):'')+'</span>'+esc(r.piste):'<span class="dim">'+(r.st==='ok'?"L'offre existe":"Pas d'offre à créer")+'</span>';
+      var piste=r.piste?'<span class="kind">'+esc(r.on)+'</span>'+esc(r.piste):'<span class="dim">'+(r.st==='ok'?"L'offre existe":"Pas d'offre à créer")+'</span>';
       var pr=r.prio?'<span class="prio'+(r.prio<=3?' hi':'')+'">'+r.prio+'</span>':'<span class="dim">·</span>';
       html+='<tr><td class="n">P'+r.n+'</td><td class="prop">'+esc(r.prop)+'</td><td data-l="Offres aujourd\'hui">'+offers+'</td><td data-l="Statut">'+status(r.st)+'</td><td data-l="Piste proposée">'+piste+'</td><td data-l="Pourquoi maintenant"'+(r.why?'':' class="nil"')+'>'+(r.why?esc(r.why):'<span class="dim">·</span>')+'</td><td data-l="Priorité"'+(r.prio?'':' class="nil"')+'>'+pr+'</td></tr>';
     });
     if(!list.length)html='<tr class="empty"><td colspan="7">Aucune proposition ne correspond à ces filtres.</td></tr>';
     document.querySelector('#map tbody').innerHTML=html;
     document.getElementById('count').textContent=list.length+' sur '+total;
-    var active=only||fs.value||fa.value||fk.value||term||fg.value!=='axe'||sort.key!=='n'||sort.dir!==1;
+    var active=only||fs.value||fa.value||term||fg.value!=='axe'||sort.key!=='n'||sort.dir!==1;
     document.getElementById('clear').classList.toggle('show',!!active);
-    label('fb-status',fs,'Statut');label('fb-axe',fa,'Axe');label('fb-kind',fk,'Piste');label('fb-group',fg,'Grouper par axe',fg.value==='axe');
+    label('fb-status',fs,'Statut');label('fb-axe',fa,'Axe');label('fb-group',fg,'Grouper par axe',fg.value==='axe');
     document.querySelectorAll('#map th[data-key]').forEach(function(th){
       var on=th.dataset.key===sort.key;
       if(on){th.setAttribute('aria-sort',sort.dir>0?'ascending':'descending');th.querySelector('.arrow').textContent=sort.dir>0?'▲':'▼';}
       else{th.removeAttribute('aria-sort');th.querySelector('.arrow').textContent='▲';}
     });
   }
-  [fs,fa,fk,fg].forEach(function(s){s.addEventListener('change',function(){only=null;render();});});
+  [fs,fa,fg].forEach(function(s){s.addEventListener('change',function(){only=null;render();});});
   q.addEventListener('input',function(){only=null;render();});
-  document.getElementById('clear').addEventListener('click',function(){only=null;fs.value='';fa.value='';fk.value='';fg.value='axe';q.value='';sort={key:'n',dir:1};render();});
+  document.getElementById('clear').addEventListener('click',function(){only=null;if(location.search)history.replaceState(null,'',location.pathname);fs.value='';fa.value='';fg.value='axe';q.value='';sort={key:'n',dir:1};render();});
   document.querySelectorAll('#map th[data-key] button').forEach(function(b){
     b.addEventListener('click',function(){var k=b.parentNode.dataset.key;if(sort.key===k)sort.dir*=-1;else sort={key:k,dir:1};if(k!=='n'&&fg.value==='axe')fg.value='none';render();});
   });
-  document.querySelectorAll('.show').forEach(function(b){
-    b.addEventListener('click',function(){
-      only=b.dataset.show.split(',').map(Number);fs.value='';fa.value='';fk.value='';q.value='';render();
-      document.getElementById('mapview').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
-    });
-  });
+  var p=new URLSearchParams(location.search).get('p');
+  if(p)only=p.split(',').map(Number);
   render();
 })();
 </script>

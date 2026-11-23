@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<title>Pistes à lancer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* Priorities: one row per piste, the figure that justifies it on the right */
+.pistes{list-style:none;margin:0;padding:0;background:var(--raised);border:1px solid var(--line);border-radius:12px}
+.pistes > li{display:grid;grid-template-columns:44px minmax(0,1fr) 230px;gap:20px;padding:22px 24px;border-bottom:1px solid var(--line-soft)}
+.pistes > li:last-child{border-bottom:none}
+.pistes .k{font-size:24px;font-weight:700;line-height:1.2;color:var(--navy);font-variant-numeric:tabular-nums}
+.pistes .body{display:grid;gap:6px;align-content:start}
+.pistes .line{font-size:13px;color:var(--muted)}
+.pistes .line b{color:var(--strong);font-weight:700}
+.pistes .body p{color:var(--body);max-width:640px}
+.show{justify-self:start;margin-top:4px;font:inherit;font-size:13px;font-weight:700;color:var(--mid);background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.show{text-decoration:none}
+.show:hover{text-decoration:underline}
+.show svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.fig{border-left:1px solid var(--line-soft);padding-left:20px;display:grid;gap:4px;align-content:start}
+.fig b{font-size:26px;line-height:1.15;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fig b .arr{color:var(--faint);font-weight:400;margin:0 4px}
+.fig span{font-size:12px;color:var(--muted)}
+
+/* P8 evidence */
+.evidence{background:var(--raised);border:1px solid var(--line);border-radius:12px}
+.evidence header{display:grid;gap:6px;padding:20px 24px;border-bottom:1px solid var(--line-soft)}
+.evidence header p{color:var(--body);max-width:760px}
+.evidence dl{margin:0}
+.evidence .row{display:grid;grid-template-columns:200px minmax(0,1fr) 150px;gap:20px;padding:14px 24px;border-bottom:1px solid var(--line-soft);align-items:baseline}
+.evidence .row:last-child{border-bottom:none}
+.evidence dt{font-weight:700;color:var(--strong)}
+.evidence dd{margin:0;color:var(--body)}
+.evidence .src{justify-self:end;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+.evidence .src:hover{text-decoration:underline}
+.evidence .src.none{color:var(--faint);font-weight:400}
+
+@media (max-width:860px){
+  .pistes > li{grid-template-columns:32px minmax(0,1fr);padding:18px 16px}
+  .fig{grid-column:2;border-left:none;padding-left:0;border-top:1px solid var(--line-soft);padding-top:10px}
+  .evidence .row{grid-template-columns:1fr;gap:4px;padding:14px 16px}
+  .evidence .src{justify-self:start}
+  .evidence header{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Livre blanc 2026 et offres RH</h1>
+  <p class="lead">Trois pistes à lancer en premier, classées par priorité, et un savoir-faire déjà en place à formaliser.</p>
+  <nav class="tabs" aria-label="Pages">
+    <a href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Propositions et offres <span class="c">16</span></a>
+    <a href="pistes.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Pistes à lancer <span class="c">3</span></a>
+    <a href="corrections.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Corrections avant publication <span class="c">10</span></a>
+  </nav>
+</header>
+
+<section aria-labelledby="t2">
+  <h2 id="t2">Les trois pistes à lancer en premier</h2>
+  <ol class="pistes">
+    <li>
+      <span class="k">1</span>
+      <div class="body">
+        <h3>Intérim, la part AT/MP de l'entreprise utilisatrice</h3>
+        <span class="line"><b>Nouvelle offre</b> · proche de Maîtriser les cotisations AT/MP · P9</span>
+        <p>Depuis le décret du 5 juillet 2024, l'entreprise utilisatrice paie la moitié du coût des AT/MP de ses intérimaires, sur tous les sinistres, sans pouvoir agir seule auprès de la CPAM. Aucun concurrent n'a d'offre dédiée.</p>
+        <a class="show" href="./?p=9#mapview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Voir la ligne</a>
+      </div>
+      <div class="fig"><b>1/3<span class="arr">→</span>1/2</b><span>part du coût AT/MP portée par l'entreprise utilisatrice, sur les taux 2026 à 2028</span></div>
+    </li>
+    <li>
+      <span class="k">2</span>
+      <div class="body">
+        <h3>Absentéisme maladie</h3>
+        <span class="line"><b>Nouvelle offre</b> · contre-visite et retour au travail · P12, P13, P14</span>
+        <p>Les arrêts sont plafonnés depuis septembre 2026, et la loi contre les fraudes laisse l'employeur arrêter le maintien de salaire après une contre-visite négative. Nos données IJ et DSN donnent un avantage sur les sociétés qui ne vendent que la contre-visite.</p>
+        <a class="show" href="./?p=12,13,14#mapview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Voir les lignes</a>
+      </div>
+      <div class="fig"><b>31 j</b><span>durée maximale d'un premier arrêt depuis le 1er septembre 2026, puis 62 jours par prolongation</span></div>
+    </li>
+    <li>
+      <span class="k">3</span>
+      <div class="body">
+        <h3>NAO sous RGDU</h3>
+        <span class="line"><b>Add-on</b> · sur Optimisation des charges sociales · P2</span>
+        <p>Chaque hausse de salaire réduit l'allègement, car le SMIC de référence reste gelé pour 2026. Le module simule le coût réel de chaque scénario de NAO sur la paie du client. La saison des NAO a commencé.</p>
+        <a class="show" href="./?p=2#mapview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Voir la ligne</a>
+      </div>
+      <div class="fig"><b>−269 €</b><span>de RGDU par an pour un salarié à 120 % du SMIC augmenté de 3 % (exemple du livre blanc)</span></div>
+    </li>
+  </ol>
+</section>
+
+<section aria-labelledby="t3">
+  <div class="evidence">
+    <header>
+      <span class="status"><span class="dot d-prac"></span>P8 · À formaliser</span>
+      <h2 id="t3">Taux d'IP et CMRA, un savoir-faire déjà en place</h2>
+      <p>Il n'y a pas d'offre à créer. La décision porte sur un module visible dans Maîtriser les cotisations AT/MP, que Leyton vend déjà sous son propre nom.</p>
+    </header>
+    <dl>
+      <div class="row"><dt>Témoignage STEF</dt><dd>Cite le travail sur « les taux d'incapacité » et sur « les opportunités de contestation », avec des cabinets d'avocats indépendants.</dd><a class="src" href="https://www.ayming.fr/temoignages-clients/stef-ameliore-pilotage-arret-travail-et-risques-professionnels/" target="_blank" rel="noopener">ayming.fr ↗</a></div>
+      <div class="row"><dt>Webinaire 2019</dt><dd>Ayming a présenté la procédure devant la CMRA aux employeurs.</dd><a class="src" href="https://www.ayming.fr/wp-content/uploads/sites/11/2019/05/Prez_webinaire_Decret_contentieux.pdf" target="_blank" rel="noopener">Support PDF ↗</a></div>
+      <div class="row"><dt>Deck Gestion des AT/MP</dt><dd>Cite un réseau de médecins indépendants à côté des cabinets d'avocats.</dd><span class="src none">Deck interne</span></div>
+    </dl>
+  </div>
+</section>
+
+<p class="foot">¹ Sources : texte du livre blanc lu en entier, fiches des offres RH France, recherche web du 23 novembre 2026.</p>
+</div>
+</body>
+</html>
