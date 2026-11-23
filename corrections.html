@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
 <link rel="stylesheet" href="style.css">
 <style>
-#fix col.c-p{width:56px} #fix col.c-w{width:120px} #fix col.c-cur{width:22%} #fix col.c-fix{width:auto} #fix col.c-t{width:110px} #fix col.c-img{width:200px} #fix col.c-src{width:150px}
+#fix col.c-p{width:56px} #fix col.c-w{width:120px} #fix col.c-cur{width:22%} #fix col.c-fix{width:auto} #fix col.c-t{width:112px} #fix col.c-img{width:270px} #fix col.c-src{width:130px}
 .shot{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;cursor:zoom-in;transition:border-color .15s ease-out}
 .shot:hover{border-color:var(--accent)}
 .shot img{display:block;width:100%;height:auto}
@@ -105,7 +105,7 @@ dialog.viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;anim
     shown=list.filter(function(f){return f.img;});
     document.querySelector('#fix tbody').innerHTML=list.map(function(f){
       var i=fixes.indexOf(f);
-      var img=f.img?'<button class="shot" data-i="'+i+'" aria-label="Agrandir la capture de la page '+f.p+'"><img src="captures/'+f.img+'.png" alt="Page '+f.p+' du livre blanc, passage entouré" loading="lazy"></button>':'<span class="dim">Ajout, rien à entourer</span>';
+      var img=f.img?'<button class="shot" data-i="'+i+'" aria-label="Agrandir la capture de la page '+f.p+'"><img src="captures/'+f.img+'-thumb.png" alt="Page '+f.p+' du livre blanc, passage entouré" loading="lazy"></button>':'<span class="dim">Ajout, rien à entourer</span>';
       var links=[];
       if(f.img)links.push('<button data-i="'+i+'">Voir la capture</button>');
       if(f.src)links.push('<a href="'+f.src.url+'" target="_blank" rel="noopener">'+esc(f.src.label)+' ↗</a>');
